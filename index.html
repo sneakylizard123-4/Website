@@ -1,43 +1,61 @@
 <!doctype html>
 <html lang="en">
   <head>
+    <!-- Character encoding for proper text rendering. -->
     <meta charset="UTF-8" />
+    <!-- Responsive viewport so layout scales correctly on mobile devices. -->
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <!-- Browser tab title. -->
     <title>My Projects</title>
     <style>
-      :root {
-        color-scheme: light dark;
-      }
-
+      /* Base page styles: readable typography, neutral colors, and no default body margin. */
       body {
         margin: 0;
         font-family: Arial, sans-serif;
         line-height: 1.5;
+        color: #111827;
+        background: #ffffff;
       }
 
+      /* Main content container: centered with a comfortable reading width. */
       main {
         max-width: 720px;
         margin: 0 auto;
-        padding: 2rem 1rem;
+        padding: 2rem 1.2rem;
+        margin-top: 1rem;
       }
 
+      /* Tighten spacing below headings for cleaner section rhythm. */
       h1,
       h2 {
         margin-bottom: 0.5rem;
       }
 
+      /* Slight left indent for bullet lists. */
       ul {
         padding-left: 1.2rem;
+      }
+
+      /* Mobile adjustments: smaller margins and padding to fit narrow screens. */
+      @media (max-width: 768px) {
+        main {
+          margin: 1rem;
+          padding: 1.25rem;
+        }
       }
     </style>
   </head>
   <body>
+    <!-- Main page content. -->
     <main>
+      <!-- Intro heading and short personal description. -->
       <h1>Hi, I’m pn2222a</h1>
       <p>Welcome to my website. I use this space to share what I’m building.</p>
 
+      <!-- Projects section with accessible heading association. -->
       <section aria-labelledby="projects-title">
         <h2 id="projects-title">Projects</h2>
+        <!-- Placeholder project list to be replaced with real project entries. -->
         <ul>
           <li>
             Coming soon: your first featured project with a short description
