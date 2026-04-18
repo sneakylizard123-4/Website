@@ -1,0 +1,26 @@
+/* Main content container: centered with a comfortable reading width. */
+main {
+  max-width: 720px;
+  margin: 0 auto;
+  padding: 2rem 1.2rem;
+  margin-top: 1rem;
+}
+
+/* Tighten spacing below headings for cleaner section rhythm. */
+h1,
+h2 {
+  margin-bottom: 0.5rem;
+}
+
+/* Slight left indent for bullet lists. */
+ul {
+  padding-left: 1.2rem;
+}
+
+/* Mobile adjustments: smaller margins and padding to fit narrow screens. */
+@media (max-width: 768px) {
+  main {
+    margin: 1rem;
+    padding: 1.25rem;
+  }
+}

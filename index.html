@@ -7,312 +7,14 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <!-- Browser tab title. -->
     <title>My Projects</title>
-    <script>
-      // Apply theme as early as possible to reduce theme flash on load.
-      (() => {
-        const savedMode = localStorage.getItem("themePreference") || "auto";
-        const prefersDark = window.matchMedia("(prefers-color-scheme: dark)").matches;
-        const resolvedTheme = savedMode === "auto" ? (prefersDark ? "dark" : "light") : savedMode;
 
-        document.documentElement.dataset.themeMode = savedMode;
-        document.documentElement.dataset.theme = resolvedTheme;
-        document.documentElement.style.colorScheme = resolvedTheme;
-      })();
-    </script>
-    <style>
-      /* Theme variables: light mode defaults. */
-      :root {
-        --bg: #ffffff;
-        --text: #111827;
-        --header-bg: #ffffff;
-        --line: #e5e7eb;
-        --surface: #f9fafb;
-        --surface-hover: #eef2f7;
-        --surface-border: #d1d5db;
-        --panel-bg: #ffffff;
-        --panel-border: #d1d5db;
-        --panel-shadow: rgba(0, 0, 0, 0.08);
-        --link-hover: #f3f4f6;
-      }
+    <!-- Theme bootstrap must run before styles paint to avoid flash. -->
+    <script src="scripts/theme-init.js"></script>
 
-      /* Dark mode overrides when selected or auto-detected. */
-      html[data-theme="dark"] {
-        --bg: #0f172a;
-        --text: #e5e7eb;
-        --header-bg: #111827;
-        --line: #1f2937;
-        --surface: #1f2937;
-        --surface-hover: #374151;
-        --surface-border: #4b5563;
-        --panel-bg: #111827;
-        --panel-border: #374151;
-        --panel-shadow: rgba(0, 0, 0, 0.45);
-        --link-hover: #1f2937;
-      }
-
-      /* Base page styles: readable typography, neutral colors, and no default body margin. */
-      body {
-        margin: 0;
-        font-family: Arial, sans-serif;
-        line-height: 1.5;
-        color: var(--text);
-        background: var(--bg);
-        transition: background-color 260ms ease, color 260ms ease;
-      }
-
-      /* Brief visual polish when theme mode changes. */
-      body.theme-fade {
-        animation: theme-fade 280ms ease;
-      }
-
-      @keyframes theme-fade {
-        from {
-          opacity: 0.95;
-          transform: translateY(1px);
-        }
-        to {
-          opacity: 1;
-          transform: translateY(0);
-        }
-      }
-
-      /* Header bar with lightweight sticky behavior. */
-      .site-header {
-        position: sticky;
-        top: 0;
-        z-index: 10;
-        background: var(--header-bg);
-        border-bottom: 1px solid var(--line);
-        transition: background-color 260ms ease, border-color 260ms ease;
-      }
-
-      /* Inner header layout keeps content aligned with the main container width. */
-      .header-inner {
-        max-width: 720px;
-        margin: 0 auto;
-        padding: 0.85rem 1.2rem;
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-        gap: 0.75rem;
-        flex-wrap: wrap;
-      }
-
-      /* Simple site name at the left of the header. */
-      .brand {
-        display: inline-flex;
-        align-items: center;
-        margin: 0;
-        text-decoration: none;
-      }
-
-      /* Brand image in the top-left corner. */
-      .brand img {
-        width: 40px;
-        height: 40px;
-        border-radius: 0.5rem;
-        display: block;
-      }
-
-      /* Dropdown list container for top-level menu groups. */
-      .menu {
-        display: flex;
-        gap: 0.5rem;
-        flex-wrap: wrap;
-      }
-
-      /* Each dropdown uses <details> so it works with no JavaScript. */
-      .menu details {
-        position: relative;
-      }
-
-      /* Top-level dropdown trigger styling. */
-      .menu summary {
-        list-style: none;
-        cursor: pointer;
-        padding: 0.25rem 0.1rem;
-        border: none;
-        border-radius: 0;
-        background: transparent;
-        color: var(--text);
-        font-size: 0.9rem;
-        transition: color 180ms ease, opacity 180ms ease, transform 180ms ease;
-      }
-
-      /* Add a small arrow icon and animate it when the dropdown opens. */
-      .menu summary::after {
-        content: "▾";
-        margin-left: 0.45rem;
-        display: inline-block;
-        transition: transform 180ms ease;
-      }
-
-      /* Hide default browser disclosure marker for custom summary appearance. */
-      .menu summary::-webkit-details-marker {
-        display: none;
-      }
-
-      /* Subtle visual cue on hover/focus for better interactivity feedback. */
-      .menu summary:hover,
-      .menu summary:focus-visible {
-        opacity: 0.72;
-        transform: translateY(-1px);
-      }
-
-      /* Rotate the custom arrow while the dropdown is expanded. */
-      .menu details[open] summary::after {
-        transform: rotate(180deg);
-      }
-
-      /* Dropdown panel appears below its trigger. */
-      .dropdown-panel {
-        position: absolute;
-        right: 0;
-        top: calc(100% + 0.35rem);
-        min-width: 200px;
-        margin: 0;
-        padding: 0.5rem;
-        background: var(--panel-bg);
-        border: 1px solid var(--panel-border);
-        border-radius: 0.5rem;
-        box-shadow: 0 8px 18px var(--panel-shadow);
-        transform-origin: top right;
-        transition: background-color 260ms ease, border-color 260ms ease, box-shadow 260ms ease;
-      }
-
-      /* Animate dropdown panel when it appears. */
-      .menu details[open] .dropdown-panel {
-        animation: dropdown-in 180ms ease;
-      }
-
-      @keyframes dropdown-in {
-        from {
-          opacity: 0;
-          transform: translateY(-6px) scale(0.98);
-        }
-        to {
-          opacity: 1;
-          transform: translateY(0) scale(1);
-        }
-      }
-
-      /* Links inside dropdown panels. */
-      .dropdown-panel a {
-        display: block;
-        padding: 0.35rem 0.4rem;
-        color: var(--text);
-        text-decoration: none;
-        border-radius: 0.35rem;
-        transition: color 260ms ease, background-color 180ms ease;
-      }
-
-      /* Hover/focus affordance for dropdown links. */
-      .dropdown-panel a:hover,
-      .dropdown-panel a:focus-visible {
-        background: var(--link-hover);
-      }
-
-      /* Theme selector control in the top header. */
-      .theme-control {
-        display: inline-flex;
-        align-items: center;
-        margin-left: auto;
-      }
-
-      .theme-toggle {
-        width: 1.8rem;
-        height: 1.8rem;
-        display: inline-flex;
-        align-items: center;
-        justify-content: center;
-        border: none;
-        background: transparent;
-        color: var(--text);
-        cursor: pointer;
-        font-size: 1.15rem;
-        opacity: 0.82;
-        padding: 0;
-        transition: color 260ms ease, opacity 160ms ease, transform 180ms ease;
-      }
-
-      /* Keep theme icon sizing consistent across sun/moon states. */
-      .theme-toggle svg {
-        width: 1.05rem;
-        height: 1.05rem;
-        display: block;
-      }
-
-      .theme-toggle:hover,
-      .theme-toggle:focus-visible {
-        opacity: 1;
-        transform: translateY(-1px) scale(1.05);
-      }
-
-      /* Main content container: centered with a comfortable reading width. */
-      main {
-        max-width: 720px;
-        margin: 0 auto;
-        padding: 2rem 1.2rem;
-        margin-top: 1rem;
-      }
-
-      /* Tighten spacing below headings for cleaner section rhythm. */
-      h1,
-      h2 {
-        margin-bottom: 0.5rem;
-      }
-
-      /* Slight left indent for bullet lists. */
-      ul {
-        padding-left: 1.2rem;
-      }
-
-      /* Mobile adjustments: smaller margins and padding to fit narrow screens. */
-      @media (max-width: 768px) {
-        .header-inner {
-          margin: 0 1rem;
-          padding: 0.75rem 0;
-        }
-
-        .dropdown-panel {
-          right: auto;
-          left: 0;
-          transform-origin: top left;
-        }
-
-        .theme-control {
-          margin-left: auto;
-        }
-
-        main {
-          margin: 1rem;
-          padding: 1.25rem;
-        }
-      }
-
-      @media (prefers-reduced-motion: reduce) {
-        .menu summary,
-        .menu summary::after {
-          transition: none;
-        }
-
-        body,
-        .site-header,
-        .dropdown-panel,
-        .dropdown-panel a,
-        .theme-toggle {
-          transition: none;
-        }
-
-        body.theme-fade {
-          animation: none;
-        }
-
-        .menu details[open] .dropdown-panel {
-          animation: none;
-        }
-      }
-    </style>
+    <!-- Modular stylesheet layers. -->
+    <link rel="stylesheet" href="styles/theme.css" />
+    <link rel="stylesheet" href="styles/header.css" />
+    <link rel="stylesheet" href="styles/main.css" />
   </head>
   <body>
     <!-- Site header with dropdown navigation groups. -->
@@ -322,50 +24,52 @@
           <img src="images/logo.png" alt="pn2222a logo" />
         </a>
 
-        <!-- Single-click theme selector cycles: Auto -> Light -> Dark. -->
-        <div class="theme-control">
-          <button
-            id="theme-toggle"
-            class="theme-toggle"
-            type="button"
-            aria-label="Toggle theme mode"
-            title="Theme: Auto"
-          >
-            A
-          </button>
+        <div class="header-actions">
+          <nav class="menu" aria-label="Main menu">
+            <!-- Projects dropdown with links to project pages. -->
+            <details class="header-dropdown">
+              <summary>Projects</summary>
+              <div class="dropdown-panel">
+                <a href="pages/projects/featured.html">Featured Projects</a>
+                <a href="pages/projects/in-progress.html">In Progress</a>
+                <a href="pages/projects/archive.html">Archive</a>
+              </div>
+            </details>
+
+            <!-- Links dropdown with links to social profiles and contact. -->
+            <details class="header-dropdown">
+              <summary>Links</summary>
+              <div class="dropdown-panel">
+                <a href="pages/links/index.html">GitHub</a>
+                <a href="pages/links/index.html">Instagram</a>
+                <a href="pages/more/contact.html">Contact</a>
+              </div>
+            </details>
+
+            <!-- More dropdown for additional pages. -->
+            <details class="header-dropdown">
+              <summary>More</summary>
+              <div class="dropdown-panel">
+                <a href="pages/more/about.html">About</a>
+                <a href="pages/more/blog.html">Blog</a>
+                <a href="pages/more/now.html">Now</a>
+              </div>
+            </details>
+          </nav>
+
+          <!-- Single-click theme selector cycles: Auto -> Light -> Dark. -->
+          <div class="theme-control">
+            <button
+              id="theme-toggle"
+              class="theme-toggle"
+              type="button"
+              aria-label="Toggle theme mode"
+              title="Theme: Auto"
+            >
+              A
+            </button>
+          </div>
         </div>
-
-        <nav class="menu" aria-label="Main menu">
-          <!-- Projects dropdown contains internal section links. -->
-          <details class="header-dropdown">
-            <summary>Projects</summary>
-            <div class="dropdown-panel">
-              <a href="#projects-title">Featured Projects</a>
-              <a href="#projects-title">In Progress</a>
-              <a href="#projects-title">Archive</a>
-            </div>
-          </details>
-
-          <!-- Links dropdown can point to external profiles later. -->
-          <details class="header-dropdown">
-            <summary>Links</summary>
-            <div class="dropdown-panel">
-              <a href="#">GitHub</a>
-              <a href="#">LinkedIn</a>
-              <a href="#">Contact</a>
-            </div>
-          </details>
-
-          <!-- More dropdown for future pages/sections. -->
-          <details class="header-dropdown">
-            <summary>More</summary>
-            <div class="dropdown-panel">
-              <a href="#">About</a>
-              <a href="#">Blog</a>
-              <a href="#">Now</a>
-            </div>
-          </details>
-        </nav>
       </div>
     </header>
 
@@ -389,103 +93,8 @@
       </section>
     </main>
 
-    <script>
-      // Keep header dropdowns mutually exclusive: opening one closes the others.
-      const headerDropdowns = document.querySelectorAll(".header-dropdown");
-
-      headerDropdowns.forEach((dropdown) => {
-        dropdown.addEventListener("toggle", () => {
-          if (!dropdown.open) {
-            return;
-          }
-
-          headerDropdowns.forEach((other) => {
-            if (other !== dropdown) {
-              other.open = false;
-            }
-          });
-        });
-      });
-
-      // Theme selection logic with auto-detect support.
-      const themeToggle = document.getElementById("theme-toggle");
-      const colorSchemeMedia = window.matchMedia("(prefers-color-scheme: dark)");
-
-      function resolveTheme(mode) {
-        if (mode === "auto") {
-          return colorSchemeMedia.matches ? "dark" : "light";
-        }
-        return mode;
-      }
-
-      function applyTheme(mode) {
-        const resolved = resolveTheme(mode);
-        document.documentElement.dataset.themeMode = mode;
-        document.documentElement.dataset.theme = resolved;
-        document.documentElement.style.colorScheme = resolved;
-
-        // Trigger a quick animation on theme changes.
-        if (!window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
-          document.body.classList.remove("theme-fade");
-          void document.body.offsetWidth;
-          document.body.classList.add("theme-fade");
-        }
-      }
-
-      function updateThemeToggle(mode) {
-        if (!themeToggle) {
-          return;
-        }
-
-        const resolvedMode = resolveTheme(mode);
-
-        const iconByMode = {
-          light:
-            '<svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><circle cx="12" cy="12" r="4" fill="currentColor"/><path d="M12 2.5v3M12 18.5v3M21.5 12h-3M5.5 12h-3M18.7 5.3l-2.1 2.1M7.4 16.6l-2.1 2.1M18.7 18.7l-2.1-2.1M7.4 7.4 5.3 5.3" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>',
-          dark:
-            '<svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path fill="currentColor" fill-rule="evenodd" clip-rule="evenodd" d="M14.7 2.8a9.2 9.2 0 1 0 6.5 15.8 7.6 7.6 0 1 1-6.5-15.8Z"/></svg>',
-        };
-
-        const titleByMode = {
-          auto: "Theme: Auto (system)",
-          light: "Theme: Light",
-          dark: "Theme: Dark",
-        };
-
-        const iconMode = mode === "auto" ? resolvedMode : mode;
-        themeToggle.innerHTML = iconByMode[iconMode] || iconByMode.light;
-        themeToggle.title = titleByMode[mode] || "Theme: Auto";
-        themeToggle.setAttribute("aria-label", `${titleByMode[mode] || "Theme: Auto"}. Click to change`);
-      }
-
-      const initialMode = document.documentElement.dataset.themeMode || "auto";
-      updateThemeToggle(initialMode);
-
-      if (themeToggle) {
-        themeToggle.addEventListener("click", () => {
-          const currentMode = document.documentElement.dataset.themeMode || "auto";
-
-          // Auto is the default startup mode, but manual toggling is only light <-> dark.
-          let nextMode;
-          if (currentMode === "auto") {
-            nextMode = resolveTheme("auto") === "dark" ? "light" : "dark";
-          } else {
-            nextMode = currentMode === "dark" ? "light" : "dark";
-          }
-
-          localStorage.setItem("themePreference", nextMode);
-          applyTheme(nextMode);
-          updateThemeToggle(nextMode);
-        });
-      }
-
-      colorSchemeMedia.addEventListener("change", () => {
-        const mode = document.documentElement.dataset.themeMode || "auto";
-        if (mode === "auto") {
-          applyTheme("auto");
-          updateThemeToggle("auto");
-        }
-      });
-    </script>
+    <!-- Modular behavior scripts. -->
+    <script src="scripts/dropdowns.js" defer></script>
+    <script src="scripts/theme-toggle.js" defer></script>
   </body>
 </html>

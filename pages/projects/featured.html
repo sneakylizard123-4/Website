@@ -1,0 +1,103 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Featured Projects</title>
+
+    <script src="../../scripts/theme-init.js"></script>
+
+    <link rel="stylesheet" href="../../styles/theme.css" />
+    <link rel="stylesheet" href="../../styles/header.css" />
+    <link rel="stylesheet" href="../../styles/main.css" />
+    <link rel="stylesheet" href="../../styles/projects.css" />
+  </head>
+  <body>
+    <header class="site-header">
+      <div class="header-inner">
+        <a class="brand" href="/" aria-label="Home">
+          <img src="../../images/logo.png" alt="pn2222a logo" />
+        </a>
+
+        <div class="header-actions">
+          <nav class="menu" aria-label="Main menu">
+            <details class="header-dropdown">
+              <summary>Projects</summary>
+              <div class="dropdown-panel">
+                <a href="featured.html">Featured Projects</a>
+                <a href="in-progress.html">In Progress</a>
+                <a href="archive.html">Archive</a>
+              </div>
+            </details>
+
+            <details class="header-dropdown">
+              <summary>Links</summary>
+              <div class="dropdown-panel">
+                <a href="../links/index.html">GitHub</a>
+                <a href="../links/index.html">Instagram</a>
+                <a href="../more/contact.html">Contact</a>
+              </div>
+            </details>
+
+            <details class="header-dropdown">
+              <summary>More</summary>
+              <div class="dropdown-panel">
+                <a href="../more/about.html">About</a>
+                <a href="../more/blog.html">Blog</a>
+                <a href="../more/now.html">Now</a>
+              </div>
+            </details>
+          </nav>
+
+          <div class="theme-control">
+            <button
+              id="theme-toggle"
+              class="theme-toggle"
+              type="button"
+              aria-label="Toggle theme mode"
+              title="Theme: Auto"
+            >
+              A
+            </button>
+          </div>
+        </div>
+      </div>
+    </header>
+
+    <main>
+      <h1>Featured Projects</h1>
+      <p>These are my most polished and complete projects.</p>
+
+      <div class="projects-toolbar">
+        <label for="project-category">Category</label>
+        <select id="project-category" name="project-category">
+          <option value="all">All</option>
+          <option value="featured" selected>Featured</option>
+          <option value="in-progress">In Progress</option>
+          <option value="archive">Archive</option>
+        </select>
+
+        <label for="project-name-filter">Name</label>
+        <input
+          id="project-name-filter"
+          name="project-name-filter"
+          type="search"
+          placeholder="Filter by project name"
+        />
+
+        <label for="project-sort">Sort projects</label>
+        <select id="project-sort" name="project-sort">
+          <option value="default">Default order</option>
+          <option value="tags-asc">Tags A to Z</option>
+          <option value="tags-desc">Tags Z to A</option>
+        </select>
+      </div>
+
+      <div id="projects-container"></div>
+    </main>
+
+    <script src="../../scripts/dropdowns.js" defer></script>
+    <script src="../../scripts/theme-toggle.js" defer></script>
+    <script src="../../scripts/projects.js" defer></script>
+  </body>
+</html>

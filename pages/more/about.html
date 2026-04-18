@@ -1,0 +1,97 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>About Me</title>
+
+    <script src="../../scripts/theme-init.js"></script>
+
+    <link rel="stylesheet" href="../../styles/theme.css" />
+    <link rel="stylesheet" href="../../styles/header.css" />
+    <link rel="stylesheet" href="../../styles/main.css" />
+  </head>
+  <body>
+    <header class="site-header">
+      <div class="header-inner">
+        <a class="brand" href="/" aria-label="Home">
+          <img src="../../images/logo.png" alt="pn2222a logo" />
+        </a>
+
+        <div class="header-actions">
+          <nav class="menu" aria-label="Main menu">
+            <details class="header-dropdown">
+              <summary>Projects</summary>
+              <div class="dropdown-panel">
+                <a href="../projects/featured.html">Featured Projects</a>
+                <a href="../projects/in-progress.html">In Progress</a>
+                <a href="../projects/archive.html">Archive</a>
+              </div>
+            </details>
+
+            <details class="header-dropdown">
+              <summary>Links</summary>
+              <div class="dropdown-panel">
+                <a href="../links/index.html">GitHub</a>
+                <a href="../links/index.html">Instagram</a>
+                <a href="contact.html">Contact</a>
+              </div>
+            </details>
+
+            <details class="header-dropdown">
+              <summary>More</summary>
+              <div class="dropdown-panel">
+                <a href="about.html">About</a>
+                <a href="blog.html">Blog</a>
+                <a href="now.html">Now</a>
+              </div>
+            </details>
+          </nav>
+
+          <div class="theme-control">
+            <button
+              id="theme-toggle"
+              class="theme-toggle"
+              type="button"
+              aria-label="Toggle theme mode"
+              title="Theme: Auto"
+            >
+              A
+            </button>
+          </div>
+        </div>
+      </div>
+    </header>
+
+    <main>
+      <h1>About Me</h1>
+      <p>Learn more about who I am and what I do.</p>
+
+      <section>
+        <h2>Background</h2>
+        <p>
+          Tell your story here. Share your background, interests, and what
+          drives you.
+        </p>
+      </section>
+
+      <section>
+        <h2>Skills & Experience</h2>
+        <p>Outline your key skills and professional experience.</p>
+        <ul>
+          <li>Skill 1</li>
+          <li>Skill 2</li>
+          <li>Skill 3</li>
+        </ul>
+      </section>
+
+      <section>
+        <h2>Interests</h2>
+        <p>Share what you're passionate about outside of work.</p>
+      </section>
+    </main>
+
+    <script src="../../scripts/dropdowns.js" defer></script>
+    <script src="../../scripts/theme-toggle.js" defer></script>
+  </body>
+</html>

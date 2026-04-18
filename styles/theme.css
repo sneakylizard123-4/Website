@@ -1,0 +1,58 @@
+/* Theme variables: light mode defaults. */
+:root {
+  --bg: #ffffff;
+  --text: #111827;
+  --header-bg: #ffffff;
+  --line: #e5e7eb;
+  --surface: #f9fafb;
+  --surface-hover: #eef2f7;
+  --surface-border: #d1d5db;
+  --panel-bg: #ffffff;
+  --panel-border: #d1d5db;
+  --panel-shadow: rgba(0, 0, 0, 0.08);
+  --link-hover: #f3f4f6;
+}
+
+/* Dark mode overrides when selected or auto-detected. */
+html[data-theme="dark"] {
+  --bg: #0f172a;
+  --text: #e5e7eb;
+  --header-bg: #111827;
+  --line: #1f2937;
+  --surface: #1f2937;
+  --surface-hover: #374151;
+  --surface-border: #4b5563;
+  --panel-bg: #111827;
+  --panel-border: #374151;
+  --panel-shadow: rgba(0, 0, 0, 0.45);
+  --link-hover: #1f2937;
+}
+
+/* Base page styles: readable typography and no default body margin. */
+body {
+  margin: 0;
+  font-family: Arial, sans-serif;
+  line-height: 1.5;
+  color: var(--text);
+  background: var(--bg);
+  transition:
+    background-color 260ms ease,
+    color 260ms ease;
+}
+
+/* Brief visual polish when theme mode changes. */
+body.theme-fade {
+  animation: theme-fade 280ms ease;
+}
+
+@keyframes theme-fade {
+  from {
+    opacity: 0.95;
+    transform: translateY(1px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}

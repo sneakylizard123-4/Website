@@ -1,0 +1,20 @@
+{
+  "projects": [
+    {
+      "id": "DS-F722-V1",
+      "title": "Dreamscape F722 V1",
+      "description": "STM32F722 based flight controller",
+      "file": "/pages/projects/dreamscape-f722-v1/index.html",
+      "sections": ["featured", "in-progress"],
+      "tags": ["STM32", "Sensors"]
+    },
+    {
+      "id": "mesh_hand-V1",
+      "title": "Mesh_Hand V1",
+      "description": "ESP32 based meshtastic handheld with GPS and many sensors",
+      "file": "/pages/projects/mesh-hand-v1/index.html",
+      "sections": ["featured", "in-progress"],
+      "tags": ["ESP32", "Sensors"]
+    }
+  ]
+}
