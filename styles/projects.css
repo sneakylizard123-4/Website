@@ -1,5 +1,12 @@
 /* Project card styling for consistent display across project pages. */
 
+:root {
+  --project-image-fade-speed: 500ms;
+  --project-image-transform-speed: 500ms;
+  --project-image-hover-start-scale: 1.03;
+  --project-image-base-end-scale: 0.985;
+}
+
 .projects-toolbar {
   display: flex;
   align-items: center;
@@ -45,6 +52,10 @@
 }
 
 .project-card {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  align-items: start;
+  gap: 1rem;
   padding: 1.5rem;
   margin-bottom: 1.5rem;
   border-left: 4px solid var(--accent, #06b6d4);
@@ -61,6 +72,73 @@
 .project-card h3 {
   margin: 0 0 0.5rem 0;
   font-size: 1.25rem;
+}
+
+.project-meta {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  margin-bottom: 0.5rem;
+}
+
+.project-status-badge {
+  display: inline-block;
+  padding: 0.22rem 0.6rem;
+  border-radius: 999px;
+  font-size: 0.78rem;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  background: color-mix(in srgb, var(--accent) 16%, transparent);
+  color: var(--accent, #06b6d4);
+  border: 1px solid color-mix(in srgb, var(--accent) 30%, transparent);
+}
+
+.project-date {
+  font-size: 0.86rem;
+  color: color-mix(in srgb, var(--text) 70%, transparent);
+}
+
+.project-card-content {
+  min-width: 0;
+}
+
+.project-card-image-wrap {
+  position: relative;
+  width: 180px;
+  max-width: 32vw;
+  overflow: hidden;
+  border-radius: 0.5rem;
+}
+
+.project-card-image {
+  display: block;
+  width: 100%;
+  height: auto;
+  border-radius: 0.5rem;
+  object-fit: cover;
+  border: 1px solid color-mix(in srgb, var(--text) 14%, transparent);
+  transition:
+    opacity var(--project-image-fade-speed) ease,
+    transform var(--project-image-transform-speed) ease;
+}
+
+.project-card-image-hover {
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+  transform: scale(var(--project-image-hover-start-scale));
+}
+
+.project-card:hover .project-card-image-hover,
+.project-card:focus-within .project-card-image-hover {
+  opacity: 1;
+  transform: scale(1);
+}
+
+.project-card:hover .project-card-image-base,
+.project-card:focus-within .project-card-image-base {
+  opacity: 0;
+  transform: scale(var(--project-image-base-end-scale));
 }
 
 .project-card p {
@@ -94,4 +172,24 @@
   color: var(--tag-text, var(--accent, #06b6d4));
   border-radius: 0.25rem;
   font-size: 0.875rem;
+}
+
+@media (max-width: 700px) {
+  .project-card {
+    grid-template-columns: 1fr;
+  }
+
+  .project-card-image-wrap {
+    width: min(100%, 360px);
+    max-width: 100%;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .project-card,
+  .project-card-image,
+  .project-card-image-hover {
+    transition-duration: 1ms !important;
+    transform: none !important;
+  }
 }

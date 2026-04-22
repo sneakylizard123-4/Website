@@ -140,14 +140,36 @@ function renderProject(project) {
   const tagsHTML = (Array.isArray(project.tags) ? project.tags : [])
     .map((tag) => `<span class="project-tag">${tag}</span>`)
     .join("");
+  const statusBadge = project.status
+    ? `<span class="project-status-badge">${project.status}</span>`
+    : "";
+  const dateText = project.date
+    ? `<span class="project-date">${project.date}</span>`
+    : "";
+  const projectMeta = statusBadge || dateText
+    ? `<div class="project-meta">${statusBadge}${dateText}</div>`
+    : "";
   const projectLink = project.file || project.link || "#";
+  const projectImage = project.image || "";
+  const imageAlt = project.imageAlt || `${project.title} preview`;
+  const hoverImage = project.hoverImage || "";
+  const imageHTML = projectImage
+    ? `<div class="project-card-image-wrap">
+        <img class="project-card-image project-card-image-base" src="${projectImage}" alt="${imageAlt}" loading="lazy" />
+        ${hoverImage ? `<img class="project-card-image project-card-image-hover" src="${hoverImage}" alt="" aria-hidden="true" loading="lazy" />` : ""}
+      </div>`
+    : "";
 
   return `
     <li class="project-card">
-      <h3>${project.title}</h3>
-      <p>${project.description}</p>
-      <p><a href="${projectLink}" class="project-link">View project →</a></p>
-      ${tagsHTML ? `<div class="project-tags">${tagsHTML}</div>` : ""}
+      <div class="project-card-content">
+        ${projectMeta}
+        <h3>${project.title}</h3>
+        <p>${project.description}</p>
+        <p><a href="${projectLink}" class="project-link">View project →</a></p>
+        ${tagsHTML ? `<div class="project-tags">${tagsHTML}</div>` : ""}
+      </div>
+      ${imageHTML}
     </li>
   `;
 }
