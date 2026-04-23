@@ -1,7 +1,7 @@
 /* Project card styling for consistent display across project pages. */
 
 :root {
-  --project-image-fade-speed: 500ms;
+  --project-image-fade-speed: 700ms;
   --project-image-transform-speed: 500ms;
   --project-image-hover-start-scale: 1.03;
   --project-image-base-end-scale: 0.985;

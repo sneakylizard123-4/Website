@@ -1,12 +1,12 @@
 {
   "projects": [
     {
-      "id": "DS-F722-V1",
+      "id": "ds-f722-v1",
       "title": "Dreamscape F722 V1",
       "description": "STM32F722 based flight controller",
       "file": "/pages/projects/dreamscape-f722-v1/index.html",
       "status": "In Progress",
-      "date": "2026-04",
+      "date": "2026-02",
       "image": "/images/projects/test-placeholder.svg",
       "hoverImage": "/images/projects/test-placeholder-hover.svg",
       "imageAlt": "Black and purple placeholder square",
@@ -14,17 +14,30 @@
       "tags": ["STM32", "Sensors"]
     },
     {
-      "id": "mesh_hand-V1",
+      "id": "mesh_hand-v1",
       "title": "Mesh_Hand V1",
       "description": "ESP32 based meshtastic handheld with GPS and many sensors",
       "file": "/pages/projects/mesh-hand-v1/index.html",
-      "status": "Prototype",
-      "date": "2026-04",
+      "status": "In Progress",
+      "date": "2026-03",
       "image": "/images/projects/test-placeholder.svg",
       "hoverImage": "/images/projects/test-placeholder-hover.svg",
       "imageAlt": "Black and purple placeholder square",
       "sections": ["featured", "in-progress"],
       "tags": ["ESP32", "Sensors"]
+    },
+    {
+      "id": "ok-nrf-v1",
+      "title": "Overkill nRF V1",
+      "description": "nRF24 based security auditing device",
+      "file": "/pages/projects/overkill-nrf-v1/index.html",
+      "status": "In Progress",
+      "date": "2026-04",
+      "image": "/images/projects/test-placeholder.svg",
+      "hoverImage": "/images/projects/test-placeholder-hover.svg",
+      "imageAlt": "Black and purple placeholder square",
+      "sections": ["featured", "in-progress"],
+      "tags": ["ESP32", "Radio"]
     }
   ]
 }
