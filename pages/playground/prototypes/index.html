@@ -1,0 +1,69 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="Prototype experiments and work-in-progress ideas." />
+    <meta property="og:title" content="Prototypes | Playground" />
+    <meta property="og:description" content="Prototype experiments and work-in-progress ideas." />
+    <meta property="og:type" content="website" />
+    <meta property="og:image" content="../../../images/logo.png" />
+    <title>Prototypes | Playground</title>
+    <script src="../../../scripts/theme-init.js"></script>
+    <link rel="stylesheet" href="../../../styles/theme.css" />
+    <link rel="stylesheet" href="../../../styles/header.css" />
+    <link rel="stylesheet" href="../../../styles/main.css" />
+    <style>
+      .experiment-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+        gap: 1rem;
+        margin-top: 1rem;
+      }
+      .experiment-card {
+        border: 1px solid var(--border-color);
+        padding: 1.5rem;
+        border-radius: 8px;
+        text-align: center;
+      }
+      .experiment-card h3 {
+        margin-bottom: 0.5rem;
+      }
+      .experiment-card p {
+        color: var(--text-secondary);
+        font-size: 0.9rem;
+      }
+      .coming-soon {
+        opacity: 0.5;
+      }
+    </style>
+  </head>
+  <body>
+    <header class="site-header">
+      <div class="header-inner">
+        <a class="brand" href="/" aria-label="Home">
+          <img src="../../../images/logo.png" alt="pn2222a logo" />
+        </a>
+        <div class="header-actions">
+          <nav class="menu" aria-label="Main menu">
+            <a href="../../">Playground</a>
+            <div class="theme-control">
+              <button id="theme-toggle" class="theme-toggle" type="button" aria-label="Toggle theme">A</button>
+            </div>
+          </nav>
+        </div>
+      </div>
+    </header>
+    <main>
+      <h1>Prototypes</h1>
+      <p>Work-in-progress ideas and experiments.</p>
+      <div class="experiment-grid">
+        <div class="experiment-card coming-soon">
+          <h3>Coming Soon</h3>
+          <p>Prototype ideas will appear here.</p>
+        </div>
+      </div>
+    </main>
+    <script src="../../../scripts/theme-toggle.js" defer></script>
+  </body>
+</html>
