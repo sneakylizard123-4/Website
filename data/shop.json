@@ -1,0 +1,46 @@
+{
+  "products": [
+    {
+      "id": "gadget-v1",
+      "title": "Example Gadget",
+      "description": "A cool gadget I built.",
+      "price": 29.99,
+      "file": "/pages/shop/gadget-v1/index.html",
+      "status": "Sold Out",
+      "date": "2026-01",
+      "image": "/images/projects/test-placeholder.svg",
+      "hoverImage": "/images/projects/test-placeholder-hover.svg",
+      "imageAlt": "Placeholder product image",
+      "sections": ["available", "sold-out"],
+      "tags": ["Electronics", "Gadget"]
+    },
+    {
+      "id": "pcb-v1",
+      "title": "Custom PCB",
+      "description": "A custom printed circuit board for your project.",
+      "price": 19.99,
+      "file": "/pages/shop/custom-pcb-v1/index.html",
+      "status": "Sold Out",
+      "date": "2026-02",
+      "image": "/images/projects/test-placeholder.svg",
+      "hoverImage": "/images/projects/test-placeholder-hover.svg",
+      "imageAlt": "Placeholder product image",
+      "sections": ["available", "sold-out"],
+      "tags": ["PCB", "Electronics"]
+    },
+    {
+      "id": "stickers-v1",
+      "title": "Sticker Pack",
+      "description": "A set of stickers featuring my logo and designs.",
+      "price": 9.99,
+      "file": "/pages/shop/sticker-pack-v1/index.html",
+      "status": "Sold Out",
+      "date": "2026-03",
+      "image": "/images/projects/test-placeholder.svg",
+      "hoverImage": "/images/projects/test-placeholder-hover.svg",
+      "imageAlt": "Placeholder product image",
+      "sections": ["available", "sold-out"],
+      "tags": ["Merch", "Stickers"]
+    }
+  ]
+}

@@ -11,6 +11,13 @@
   --panel-border: #d1d5db;
   --panel-shadow: rgba(0, 0, 0, 0.08);
   --link-hover: #f3f4f6;
+  /* Semantic aliases for new components */
+  --background-color: var(--bg);
+  --text-color: var(--text);
+  --border-color: var(--line);
+  --surface-color: var(--surface);
+  --accent-color: #6366f1;
+  --text-secondary: #6b7280;
 }
 
 /* Dark mode overrides when selected or auto-detected. */
@@ -26,6 +33,13 @@ html[data-theme="dark"] {
   --panel-border: #374151;
   --panel-shadow: rgba(0, 0, 0, 0.45);
   --link-hover: #1f2937;
+  /* Semantic aliases for new components */
+  --background-color: var(--bg);
+  --text-color: var(--text);
+  --border-color: var(--line);
+  --surface-color: var(--surface);
+  --accent-color: #818cf8;
+  --text-secondary: #9ca3af;
 }
 
 /* Base page styles: readable typography and no default body margin. */

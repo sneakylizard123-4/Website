@@ -1,0 +1,75 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Playground</title>
+    <script src="../../scripts/theme-init.js"></script>
+    <link rel="stylesheet" href="../../styles/theme.css" />
+    <link rel="stylesheet" href="../../styles/header.css" />
+    <link rel="stylesheet" href="../../styles/main.css" />
+    <style>
+      .playground-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+        gap: 1rem;
+        margin-top: 1rem;
+      }
+      .playground-card {
+        border: 1px solid var(--border-color);
+        padding: 1rem;
+        border-radius: 8px;
+        transition: transform 0.2s;
+      }
+      .playground-card:hover {
+        transform: translateY(-2px);
+      }
+      .playground-card a {
+        text-decoration: none;
+        color: inherit;
+      }
+    </style>
+  </head>
+  <body>
+    <header class="site-header">
+      <div class="header-inner">
+        <a class="brand" href="/" aria-label="Home">
+          <img src="../../images/logo.png" alt="pn2222a logo" />
+        </a>
+        <div class="header-actions">
+          <nav class="menu" aria-label="Main menu">
+            <a href="/">Home</a>
+            <div class="theme-control">
+              <button id="theme-toggle" class="theme-toggle" type="button" aria-label="Toggle theme" title="Theme">A</button>
+            </div>
+          </nav>
+        </div>
+      </div>
+    </header>
+    <main>
+      <h1>Playground</h1>
+      <p>Experiments, prototypes, and things I'm testing.</p>
+      <div class="playground-grid">
+        <div class="playground-card">
+          <a href="experiments/">
+            <h3>Experiments</h3>
+            <p>Random code experiments</p>
+          </a>
+        </div>
+        <div class="playground-card">
+          <a href="prototypes/">
+            <h3>Prototypes</h3>
+            <p>Work-in-progress ideas</p>
+          </a>
+        </div>
+        <div class="playground-card">
+          <a href="demos/">
+            <h3>Demos</h3>
+            <p>Interactive demos</p>
+          </a>
+        </div>
+      </div>
+    </main>
+    <script src="../../scripts/theme-toggle.js" defer></script>
+  </body>
+</html>

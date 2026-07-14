@@ -1,0 +1,110 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Shop</title>
+
+    <script src="../../scripts/theme-init.js"></script>
+
+    <link rel="stylesheet" href="../../styles/theme.css" />
+    <link rel="stylesheet" href="../../styles/header.css" />
+    <link rel="stylesheet" href="../../styles/main.css" />
+    <link rel="stylesheet" href="../../styles/shop.css" />
+  </head>
+  <body>
+    <header class="site-header">
+      <div class="header-inner">
+        <a class="brand" href="/" aria-label="Home">
+          <img src="../../images/logo.png" alt="pn2222a logo" />
+        </a>
+
+        <div class="header-actions">
+          <nav class="menu" aria-label="Main menu">
+            <details class="header-dropdown">
+              <summary>Projects</summary>
+              <div class="dropdown-panel">
+                <a href="../projects/featured.html">Featured Projects</a>
+                <a href="../projects/in-progress.html">In Progress</a>
+                <a href="../projects/archive.html">Archive</a>
+              </div>
+            </details>
+
+            <details class="header-dropdown">
+              <summary>Shop</summary>
+              <div class="dropdown-panel">
+                <a href="available.html">Available</a>
+                <a href="sold-out.html">Sold Out</a>
+              </div>
+            </details>
+
+            <details class="header-dropdown">
+              <summary>Links</summary>
+              <div class="dropdown-panel">
+                <a href="../links/index.html">GitHub</a>
+                <a href="../links/index.html">Instagram</a>
+                <a href="../more/contact.html">Contact</a>
+              </div>
+            </details>
+
+            <details class="header-dropdown">
+              <summary>More</summary>
+              <div class="dropdown-panel">
+                <a href="../more/about.html">About</a>
+                <a href="../more/blog.html">Blog</a>
+                <a href="../more/now.html">Now</a>
+              </div>
+            </details>
+          </nav>
+
+          <div class="theme-control">
+            <button
+              id="theme-toggle"
+              class="theme-toggle"
+              type="button"
+              aria-label="Toggle theme mode"
+              title="Theme: Auto"
+            >
+              A
+            </button>
+          </div>
+        </div>
+      </div>
+    </header>
+
+    <main>
+      <h1>Shop</h1>
+      <p>Welcome to my shop! Here you can find projects I've built and other goodies.</p>
+
+      <div class="products-toolbar">
+        <label for="product-category">Category</label>
+        <select id="product-category" name="product-category">
+          <option value="all">All</option>
+          <option value="available">Available</option>
+          <option value="sold-out">Sold Out</option>
+        </select>
+
+        <label for="product-name-filter">Name</label>
+        <input
+          id="product-name-filter"
+          name="product-name-filter"
+          type="search"
+          placeholder="Filter by product name"
+        />
+
+        <label for="product-sort">Sort products</label>
+        <select id="product-sort" name="product-sort">
+          <option value="default">Default order</option>
+          <option value="tags-asc">Tags A to Z</option>
+          <option value="tags-desc">Tags Z to A</option>
+        </select>
+      </div>
+
+      <div id="products-container"></div>
+    </main>
+
+    <script src="../../scripts/dropdowns.js" defer></script>
+    <script src="../../scripts/theme-toggle.js" defer></script>
+    <script src="../../scripts/shop.js" defer></script>
+  </body>
+</html>

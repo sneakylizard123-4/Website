@@ -1,12 +1,9 @@
 <!doctype html>
 <html lang="en">
   <head>
-    <!-- Character encoding for proper text rendering. -->
     <meta charset="UTF-8" />
-    <!-- Responsive viewport so layout scales correctly on mobile devices. -->
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <!-- Browser tab title. -->
-    <title>My Projects</title>
+    <title>pn2222a | Engineering & Electronics</title>
 
     <!-- Theme bootstrap must run before styles paint to avoid flash. -->
     <script src="scripts/theme-init.js"></script>
@@ -17,6 +14,14 @@
     <link rel="stylesheet" href="styles/main.css" />
   </head>
   <body>
+    <!-- Animated gradient background -->
+    <div class="hero-bg" aria-hidden="true">
+      <div class="gradient-orb orb-1"></div>
+      <div class="gradient-orb orb-2"></div>
+      <div class="gradient-orb orb-3"></div>
+      <div class="grid-overlay"></div>
+    </div>
+
     <!-- Site header with dropdown navigation groups. -->
     <header class="site-header">
       <div class="header-inner">
@@ -33,6 +38,15 @@
                 <a href="pages/projects/featured.html">Featured Projects</a>
                 <a href="pages/projects/in-progress.html">In Progress</a>
                 <a href="pages/projects/archive.html">Archive</a>
+              </div>
+            </details>
+
+            <!-- Shop dropdown -->
+            <details class="header-dropdown">
+              <summary>Shop</summary>
+              <div class="dropdown-panel">
+                <a href="pages/shop/available.html">Available</a>
+                <a href="pages/shop/sold-out.html">Sold Out</a>
               </div>
             </details>
 
@@ -55,46 +69,99 @@
                 <a href="pages/more/now.html">Now</a>
               </div>
             </details>
-          </nav>
 
-          <!-- Single-click theme selector cycles: Auto -> Light -> Dark. -->
-          <div class="theme-control">
-            <button
-              id="theme-toggle"
-              class="theme-toggle"
-              type="button"
-              aria-label="Toggle theme mode"
-              title="Theme: Auto"
-            >
-              A
-            </button>
-          </div>
+            <!-- Single-click theme selector cycles: Auto -> Light -> Dark. -->
+            <div class="theme-control">
+              <button
+                id="theme-toggle"
+                class="theme-toggle"
+                type="button"
+                aria-label="Toggle theme mode"
+                title="Theme: Auto">
+                A
+              </button>
+            </div>
+          </nav>
         </div>
       </div>
     </header>
 
     <!-- Main page content. -->
     <main>
-      <!-- Intro heading and short personal description. -->
-      <h1>Hi, I’m pn2222a</h1>
-      <p>Welcome to my website. I use this space to share what I’m building.</p>
+      <!-- Hero section with animated text -->
+      <section class="hero">
+        <h1 class="hero-title">
+          <span class="title-line">Hi, I'm <span class="highlight">pn2222a</span></span>
+          <span class="title-line">I build things.</span>
+        </h1>
+        <p class="hero-subtitle">
+          <span class="typewriter" data-text="Embedded systems · PCB design · Cybersecurity · Linux · Robotics"></span>
+        </p>
+      </section>
 
       <!-- Projects section with accessible heading association. -->
-      <section aria-labelledby="projects-title">
+      <section class="content-section" aria-labelledby="projects-title">
         <h2 id="projects-title">Projects</h2>
-        <!-- Placeholder project list to be replaced with real project entries. -->
-        <ul>
-          <li>
-            Coming soon: your first featured project with a short description
-            and link.
-          </li>
-          <li>Add more project entries here as you build.</li>
-        </ul>
+        <div class="project-grid">
+          <a href="pages/projects/featured.html" class="project-card">
+            <div class="card-icon">⚡</div>
+            <div class="card-content">
+              <h3>Flight Controllers</h3>
+              <p>Dreamscape F722 — STM32-based FPV flight controller</p>
+              <span class="tag">In Progress</span>
+            </div>
+          </a>
+          <a href="pages/projects/featured.html" class="project-card">
+            <div class="card-icon">🎧</div>
+            <div class="card-content">
+              <h3>Portable Audio</h3>
+              <p>Production-quality MP3 player/radio</p>
+              <span class="tag">Prototype</span>
+            </div>
+          </a>
+          <a href="pages/projects/featured.html" class="project-card">
+            <div class="card-icon">📟</div>
+            <div class="card-content">
+              <h3>Power Modules</h3>
+              <p>PMM-1.0 — Compact STM32-based BMS</p>
+              <span class="tag">Complete</span>
+            </div>
+          </a>
+          <a href="pages/projects/in-progress.html" class="project-card">
+            <div class="card-icon">📡</div>
+            <div class="card-content">
+              <h3>Meshtastic Nodes</h3>
+              <p>Long-range LoRa mesh communication</p>
+              <span class="tag">Active</span>
+            </div>
+          </a>
+        </div>
+        <a href="pages/projects/featured.html" class="view-all">View all projects →</a>
+      </section>
+
+      <!-- Quick links section -->
+      <section class="content-section" aria-labelledby="links-title">
+        <h2 id="links-title">Connect</h2>
+        <div class="link-cards">
+          <a href="https://github.com" class="link-card" target="_blank" rel="noopener">
+            <span class="link-icon">⌘</span>
+            <span>GitHub</span>
+          </a>
+          <a href="pages/more/contact.html" class="link-card">
+            <span class="link-icon">✉</span>
+            <span>Contact</span>
+          </a>
+          <a href="pages/more/about.html" class="link-card">
+            <span class="link-icon">ℹ</span>
+            <span>About</span>
+          </a>
+        </div>
       </section>
     </main>
 
     <!-- Modular behavior scripts. -->
     <script src="scripts/dropdowns.js" defer></script>
     <script src="scripts/theme-toggle.js" defer></script>
+    <script src="scripts/hero-anim.js" defer></script>
   </body>
 </html>

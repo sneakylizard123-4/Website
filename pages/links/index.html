@@ -70,7 +70,35 @@
       <section>
         <h2>GitHub</h2>
         <p>Check out my open source projects and contributions on GitHub.</p>
-        <p><a href="https://github.com">Visit GitHub Profile →</a></p>
+
+        <!-- Contribution graph -->
+        <div class="contribution-graph">
+          <div class="graph-tabs">
+            <button class="tab active" data-period="month">Last month</button>
+            <button class="tab" data-period="3months">Last 3 months</button>
+            <button class="tab" data-period="6months">Last 6 months</button>
+            <button class="tab" data-period="year">Last year</button>
+          </div>
+          <div class="graph-header">
+            <span class="graph-title">@sneakylizard123-4</span>
+            <span class="graph-legend">
+              <span class="legend-item"><span class="level level-0"></span>0</span>
+              <span class="legend-item"><span class="level level-1"></span>1-2</span>
+              <span class="legend-item"><span class="level level-2"></span>3-4</span>
+              <span class="legend-item"><span class="level level-3"></span>5+</span>
+            </span>
+          </div>
+          <div class="graph-wrapper">
+            <svg class="graph-grid" id="contribution-grid" viewBox="0 0 720 120" preserveAspectRatio="xMinYMin meet">
+              <!-- Populated by JS -->
+            </svg>
+          </div>
+          <div class="graph-stats" id="contribution-stats">
+            <!-- Populated by JS -->
+          </div>
+        </div>
+
+        <p><a href="https://github.com/sneakylizard123-4" target="_blank" rel="noopener">Visit GitHub Profile →</a></p>
       </section>
 
       <section>
@@ -91,5 +119,6 @@
 
     <script src="../../scripts/dropdowns.js" defer></script>
     <script src="../../scripts/theme-toggle.js" defer></script>
+    <script src="../../scripts/github-graph.js" defer></script>
   </body>
 </html>
