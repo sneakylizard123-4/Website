@@ -14,46 +14,89 @@
     <link rel="stylesheet" href="../styles/header.css" />
     <link rel="stylesheet" href="../styles/main.css" />
     <style>
+      .fx-bg {
+        position: fixed;
+        inset: 0;
+        z-index: -1;
+        overflow: hidden;
+        background: var(--bg);
+      }
+      .fx-bg canvas {
+        display: block;
+        width: 100%;
+        height: 100%;
+      }
       .not-found {
         display: flex;
         flex-direction: column;
         align-items: center;
         justify-content: center;
-        min-height: 60vh;
+        min-height: 70vh;
         text-align: center;
         padding: 2rem;
+        position: relative;
+        z-index: 1;
       }
       .not-found h1 {
-        font-size: clamp(4rem, 15vw, 10rem);
-        font-weight: 700;
+        font-size: clamp(5rem, 18vw, 12rem);
+        font-weight: 900;
         margin: 0;
-        background: linear-gradient(135deg, var(--accent-color), #4ecdc4);
+        line-height: 1;
+        background: linear-gradient(135deg, var(--accent-color), #4ecdc4, #a78bfa);
+        background-size: 200% 200%;
         -webkit-background-clip: text;
         -webkit-text-fill-color: transparent;
         background-clip: text;
+        animation: gradientShift 4s ease infinite, fadeInScale 0.8s ease forwards;
+        opacity: 0;
       }
       .not-found p {
-        font-size: 1.25rem;
+        font-size: 1.15rem;
         color: var(--text-secondary);
         margin: 1rem 0 2rem;
-        max-width: 400px;
+        max-width: 420px;
+        opacity: 0;
+        animation: fadeInUp 0.6s 0.3s ease forwards;
       }
       .not-found a {
-        display: inline-block;
+        display: inline-flex;
+        align-items: center;
+        gap: 0.5rem;
         padding: 0.75rem 1.5rem;
         background: var(--accent-color);
-        color: var(--background-color);
-        border-radius: 6px;
+        color: var(--bg);
+        border-radius: 10px;
         text-decoration: none;
-        font-weight: 500;
-        transition: opacity 0.2s;
+        font-weight: 600;
+        font-size: 0.95rem;
+        transition: all 0.25s ease;
+        opacity: 0;
+        animation: fadeInUp 0.6s 0.5s ease forwards;
       }
       .not-found a:hover {
-        opacity: 0.9;
+        opacity: 1;
+        transform: translateY(-2px);
+        box-shadow: 0 8px 24px color-mix(in srgb, var(--accent-color) 35%, transparent);
+      }
+      @keyframes fadeInScale {
+        from { opacity: 0; transform: scale(0.9); }
+        to { opacity: 1; transform: scale(1); }
+      }
+      @keyframes fadeInUp {
+        from { opacity: 0; transform: translateY(16px); }
+        to { opacity: 1; transform: translateY(0); }
+      }
+      @keyframes gradientShift {
+        0%, 100% { background-position: 0% 50%; }
+        50% { background-position: 100% 50%; }
       }
     </style>
   </head>
   <body>
+    <div class="fx-bg">
+      <canvas id="fx-canvas"></canvas>
+    </div>
+
     <header class="site-header">
       <div class="header-inner">
         <a class="brand" href="/" aria-label="Home">
@@ -99,14 +142,351 @@
         </div>
       </div>
     </header>
+
     <main>
       <div class="not-found">
         <h1>404</h1>
-        <p>Page not found. The content you're looking for doesn't exist or has been moved.</p>
-        <a href="/">← Back to Home</a>
+        <p>This page doesn't exist or has been moved somewhere else.</p>
+        <a href="/">&larr; Back to Home</a>
       </div>
     </main>
+
     <script src="../scripts/dropdowns.js" defer></script>
     <script src="../scripts/theme-toggle.js" defer></script>
+    <script>
+    (function () {
+      'use strict';
+      if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+
+      var canvas = document.getElementById('fx-canvas');
+      if (!canvas) return;
+      var ctx = canvas.getContext('2d');
+      var w, h, dpr;
+      var mouse = { x: -9999, y: -9999 };
+      var isDark = function () {
+        return document.documentElement.dataset.theme === 'dark';
+      };
+      var effect = Math.random() < 0.5 ? 'blackhole' : 'matrix';
+
+      /* ─── resize ─── */
+      function resize() {
+        dpr = Math.min(window.devicePixelRatio || 1, 2);
+        w = window.innerWidth;
+        h = window.innerHeight;
+        canvas.width = w * dpr;
+        canvas.height = h * dpr;
+        ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+        if (effect === 'blackhole') initBlackHole();
+        else initMatrix();
+      }
+
+      /* ───────────────────────────────────────────
+         EFFECT 1 — Interstellar black hole
+         ─────────────────────────────────────────── */
+      var bh = {};
+
+      function initBlackHole() {
+        var cx = w * 0.82;
+        var cy = h * 0.78;
+        var Rs = Math.min(w, h) * 0.055;
+        var shadowR = Rs * 2.5;
+        var diskInner = Rs * 3;
+        var diskOuter = Rs * 16;
+        var lensR = diskOuter * 1.5;
+
+        var stars = [];
+        for (var i = 0; i < 800; i++) {
+          stars.push({
+            x: Math.random() * w,
+            y: Math.random() * h,
+            r: 0.3 + Math.random() * 1.4,
+            warmth: Math.random(),
+            twinkle: Math.random() * Math.PI * 2
+          });
+        }
+
+        bh.cx = cx;
+        bh.cy = cy;
+        bh.Rs = Rs;
+        bh.shadowR = shadowR;
+        bh.diskInner = diskInner;
+        bh.diskOuter = diskOuter;
+        bh.lensR = lensR;
+        bh.stars = stars;
+        bh.t = 0;
+        bh.rotAngle = 0;
+      }
+
+      function drawDiskGradient(opacityScale) {
+        var g = ctx.createRadialGradient(bh.cx, bh.cy, bh.diskInner, bh.cx, bh.cy, bh.diskOuter);
+        g.addColorStop(0.00, 'rgba(255,252,245,' + (0.95 * opacityScale) + ')');
+        g.addColorStop(0.03, 'rgba(255,240,190,' + (0.88 * opacityScale) + ')');
+        g.addColorStop(0.10, 'rgba(255,210,110,' + (0.70 * opacityScale) + ')');
+        g.addColorStop(0.25, 'rgba(255,150, 45,' + (0.50 * opacityScale) + ')');
+        g.addColorStop(0.50, 'rgba(230, 65, 12,' + (0.28 * opacityScale) + ')');
+        g.addColorStop(0.75, 'rgba(150, 22,  5,' + (0.12 * opacityScale) + ')');
+        g.addColorStop(1.00, 'rgba( 60,  5,  0, 0)');
+        return g;
+      }
+
+      function drawBlackHole() {
+        var cx = bh.cx, cy = bh.cy;
+        var Rs = bh.Rs;
+        var shadowR = bh.shadowR;
+        var diskInner = bh.diskInner;
+        var diskOuter = bh.diskOuter;
+        var lensR = bh.lensR;
+
+        bh.rotAngle += 0.00003;
+        var tilt = 0.35 + Math.sin(bh.rotAngle) * 0.02;
+        var dopplerAngle = bh.rotAngle * 0.5;
+
+        ctx.clearRect(0, 0, w, h);
+
+        if (!isDark()) {
+          ctx.fillStyle = '#f8f9fa';
+          ctx.fillRect(0, 0, w, h);
+        }
+
+        for (var i = 0; i < bh.stars.length; i++) {
+          var s = bh.stars[i];
+          var dx = s.x - cx, dy = s.y - cy;
+          var dist = Math.sqrt(dx * dx + dy * dy);
+          var angle = Math.atan2(dy, dx);
+
+          if (dist < lensR && dist > shadowR * 0.3) {
+            var warpFactor = Math.pow(1 - dist / lensR, 2.5) * 1.4;
+            angle += warpFactor;
+            s._drawX = cx + Math.cos(angle) * dist;
+            s._drawY = cy + Math.sin(angle) * dist;
+          } else {
+            s._drawX = s.x;
+            s._drawY = s.y;
+          }
+
+          var twinkle = 0.5 + 0.5 * Math.sin(s.twinkle + bh.t * 0.0008);
+          var cr = Math.floor(200 + (255 - 200) * s.warmth);
+          var cg = Math.floor(200 + (240 - 200) * s.warmth);
+          var cb = Math.floor(255 + (180 - 255) * s.warmth);
+          var alpha = twinkle * (isDark() ? 0.9 : 0.4);
+
+          if (dist < diskOuter && dist > shadowR * 0.3) {
+            var dimFactor = 0.05 + 0.95 * Math.pow(dist / diskOuter, 2);
+            alpha *= dimFactor;
+          }
+
+          ctx.beginPath();
+          ctx.arc(s._drawX, s._drawY, s.r, 0, Math.PI * 2);
+          ctx.fillStyle = 'rgba(' + cr + ',' + cg + ',' + cb + ',' + alpha + ')';
+          ctx.fill();
+        }
+
+        var outerGlow = ctx.createRadialGradient(cx, cy, shadowR * 2, cx, cy, diskOuter * 1.1);
+        outerGlow.addColorStop(0, 'rgba(255,160,40,0.10)');
+        outerGlow.addColorStop(0.4, 'rgba(255,100,20,0.04)');
+        outerGlow.addColorStop(1, 'rgba(200,60,10,0)');
+        ctx.beginPath();
+        ctx.arc(cx, cy, diskOuter * 1.1, 0, Math.PI * 2);
+        ctx.fillStyle = outerGlow;
+        ctx.fill();
+
+        ctx.save();
+        ctx.beginPath();
+        ctx.rect(0, 0, w, cy);
+        ctx.clip();
+        ctx.beginPath();
+        ctx.ellipse(cx, cy, diskOuter, diskOuter * tilt, 0, 0, Math.PI * 2);
+        ctx.fillStyle = drawDiskGradient(0.72);
+        ctx.fill();
+        ctx.restore();
+
+        ctx.beginPath();
+        ctx.arc(cx, cy, shadowR, 0, Math.PI * 2);
+        ctx.fillStyle = '#000';
+        ctx.fill();
+
+        ctx.save();
+        ctx.beginPath();
+        ctx.rect(0, cy, w, h);
+        ctx.clip();
+        ctx.beginPath();
+        ctx.ellipse(cx, cy, diskOuter, diskOuter * tilt, 0, 0, Math.PI * 2);
+        ctx.fillStyle = drawDiskGradient(1.0);
+        ctx.fill();
+        ctx.restore();
+
+        ctx.save();
+        ctx.beginPath();
+        ctx.ellipse(cx, cy, diskOuter, diskOuter * tilt, 0, 0, Math.PI * 2);
+        ctx.clip();
+        var dbx = Math.cos(dopplerAngle);
+        var dby = Math.sin(dopplerAngle);
+        var dopplerGrad = ctx.createLinearGradient(
+          cx - dbx * diskOuter, cy - dby * diskOuter * tilt,
+          cx + dbx * diskOuter, cy + dby * diskOuter * tilt
+        );
+        dopplerGrad.addColorStop(0, 'rgba(255,255,220,0.22)');
+        dopplerGrad.addColorStop(0.40, 'rgba(255,200,100,0)');
+        dopplerGrad.addColorStop(0.60, 'rgba(255,200,100,0)');
+        dopplerGrad.addColorStop(1, 'rgba(255,120,40,0.12)');
+        ctx.fillStyle = dopplerGrad;
+        ctx.fillRect(cx - diskOuter, cy - diskOuter * tilt, diskOuter * 2, diskOuter * tilt * 2);
+        ctx.restore();
+
+        ctx.beginPath();
+        ctx.arc(cx, cy, shadowR, 0, Math.PI * 2);
+        ctx.strokeStyle = 'rgba(255,245,215,0.55)';
+        ctx.lineWidth = 1.8;
+        ctx.stroke();
+
+        var ringGlow = ctx.createRadialGradient(cx, cy, shadowR * 0.90, cx, cy, shadowR * 1.25);
+        ringGlow.addColorStop(0, 'rgba(255,245,215,0)');
+        ringGlow.addColorStop(0.5, 'rgba(255,245,215,0.20)');
+        ringGlow.addColorStop(1, 'rgba(255,210,120,0)');
+        ctx.beginPath();
+        ctx.arc(cx, cy, shadowR * 1.25, 0, Math.PI * 2);
+        ctx.fillStyle = ringGlow;
+        ctx.fill();
+
+        bh.t++;
+      }
+
+      /* ───────────────────────────────────────────
+         EFFECT 2 — Matrix rain with parallax + cursor bounce
+         ─────────────────────────────────────────── */
+      var mx = {};
+      var glyphSet = 'アイウエオカキクケコサシスセソタチツテトナニヌネノハヒフヘホマミムメモヤユヨラリルレロワヲン0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+      var COL_W = 20;
+
+      function initMatrix() {
+        var cols = Math.ceil(w / COL_W) + 1;
+        var columns = [];
+        for (var i = 0; i < cols; i++) {
+          columns.push({
+            x: i * COL_W,
+            headY: Math.random() * h * -1,
+            speed: 1.5 + Math.random() * 4,
+            len: 8 + Math.floor(Math.random() * 18),
+            depth: 0.15 + Math.random() * 0.85,
+            chars: [],
+          });
+        }
+        mx.columns = columns;
+        mx.glyphs = glyphSet;
+        mx.t = 0;
+      }
+
+      function updateMatrix() {
+        var CR = 70;
+        var CR2 = CR * CR;
+
+        for (var i = 0; i < mx.columns.length; i++) {
+          var col = mx.columns[i];
+          col.headY += col.speed;
+
+          if (col.headY - col.len * 16 > h) {
+            col.headY = -20 - Math.random() * 80;
+            col.speed = 1.5 + Math.random() * 4;
+            col.len = 8 + Math.floor(Math.random() * 18);
+          }
+
+          for (var j = 0; j < col.len; j++) {
+            var charY = col.headY - j * 16;
+            if (charY < -30 || charY > h + 50) {
+              col.chars[j] = null;
+              continue;
+            }
+
+            var charX = col.x + COL_W / 2;
+
+            var dx = charX - mouse.x;
+            var dy = charY - mouse.y;
+            var dist2 = dx * dx + dy * dy;
+            if (dist2 < CR2 && dist2 > 1) {
+              var dist = Math.sqrt(dist2);
+              var nx = dx / dist;
+              var ny = dy / dist;
+              var overlap = CR - dist;
+              charX += nx * overlap * 0.5;
+              charY -= overlap * 0.12 * (1 - dist / CR);
+            }
+
+            col.chars[j] = { x: charX, y: charY };
+          }
+        }
+        mx.t++;
+      }
+
+      function drawMatrix() {
+        ctx.clearRect(0, 0, w, h);
+
+        if (!isDark()) {
+          ctx.fillStyle = '#f8f9fa';
+          ctx.fillRect(0, 0, w, h);
+        }
+
+        var isDk = isDark();
+        var scrollY = window.scrollY || 0;
+        ctx.font = '15px monospace';
+        ctx.textAlign = 'center';
+
+        for (var i = 0; i < mx.columns.length; i++) {
+          var col = mx.columns[i];
+          var parallaxOffset = scrollY * col.depth * 0.4;
+
+          for (var j = 0; j < col.len; j++) {
+            var ch = col.chars[j];
+            if (!ch) continue;
+
+            var renderY = ch.y + parallaxOffset;
+            if (renderY < -30 || renderY > h + 50) continue;
+
+            var fadeIn = Math.min(1, j / 3);
+            var fadeTail = Math.min(1, (col.len - 1 - j) / 4);
+            var alpha = fadeIn * fadeTail;
+
+            if (j === 0) {
+              ctx.shadowBlur = 12;
+              ctx.shadowColor = isDk ? '#0f0' : '#080';
+              alpha = 1;
+            }
+
+            var glyph = mx.glyphs[(mx.t + i * 7 + j * 13) % mx.glyphs.length];
+
+            ctx.fillStyle = isDk
+              ? 'rgba(0,255,65,' + alpha + ')'
+              : 'rgba(0,100,35,' + alpha + ')';
+            ctx.fillText(glyph, ch.x, renderY);
+
+            ctx.shadowBlur = 0;
+          }
+        }
+      }
+
+      /* ─── mouse tracking ─── */
+      document.addEventListener('mousemove', function (e) {
+        mouse.x = e.clientX;
+        mouse.y = e.clientY;
+      });
+      document.addEventListener('mouseleave', function () {
+        mouse.x = -9999;
+        mouse.y = -9999;
+      });
+
+      /* ─── animation loop ─── */
+      function loop() {
+        if (effect === 'blackhole') drawBlackHole();
+        else {
+          updateMatrix();
+          drawMatrix();
+        }
+        requestAnimationFrame(loop);
+      }
+
+      resize();
+      window.addEventListener('resize', resize);
+      loop();
+    })();
+    </script>
   </body>
 </html>
