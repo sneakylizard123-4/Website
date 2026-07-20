@@ -11,82 +11,399 @@
     <meta property="og:image" content="images/logo.png" />
     <title>pn2222a | Engineering & Electronics</title>
 
-    <!-- Theme bootstrap must run before styles paint to avoid flash. -->
     <script src="scripts/theme-init.js"></script>
 
-    <!-- Modular stylesheet layers. -->
     <link rel="stylesheet" href="styles/theme.css" />
     <link rel="stylesheet" href="styles/header.css" />
     <link rel="stylesheet" href="styles/main.css" />
     <style>
-      /* Initial hidden state for scroll animations */
-      .reveal {
-        opacity: 0;
-        transform: translateY(30px);
-        transition: opacity 0.6s ease, transform 0.6s ease;
+      /* ---- Hero ---- */
+      .hero-bg {
+        position: fixed;
+        inset: 0;
+        z-index: -1;
+        overflow: hidden;
+        background: var(--bg);
       }
-      .reveal.visible {
-        opacity: 1;
-        transform: translateY(0);
-      }
-      .reveal-delay-1 { transition-delay: 0.1s; }
-      .reveal-delay-2 { transition-delay: 0.2s; }
-      .reveal-delay-3 { transition-delay: 0.3s; }
-      .reveal-delay-4 { transition-delay: 0.4s; }
-      .reveal-delay-5 { transition-delay: 0.5s; }
-      .reveal-delay-6 { transition-delay: 0.6s; }
+      .hero-bg canvas { display: block; width: 100%; height: 100%; }
 
-      /* Minimal hero - just name and tagline */
-      .hero-minimal {
-        min-height: 70vh;
+      .hero-spotlight {
+        position: fixed;
+        inset: 0;
+        z-index: -1;
+        pointer-events: none;
+        opacity: 0;
+        transition: opacity 0.8s ease;
+      }
+      .hero-spotlight.active { opacity: 1; }
+
+      .hero {
+        min-height: 100vh;
+        min-height: 100dvh;
         display: flex;
         flex-direction: column;
         justify-content: center;
         align-items: center;
         text-align: center;
-        padding: 2rem 0;
-      }
-      .hero-name {
-        font-size: clamp(2.5rem, 8vw, 5rem);
-        font-weight: 700;
-        letter-spacing: -0.02em;
-        margin: 0 0 0.5rem;
-      }
-      .hero-tagline {
-        font-size: clamp(1rem, 2.5vw, 1.5rem);
-        color: var(--text-secondary);
-        margin: 0;
-        font-weight: 400;
-      }
-      .scroll-hint {
-        position: absolute;
-        bottom: 2rem;
-        left: 50%;
-        transform: translateX(-50%);
-        color: var(--text-secondary);
-        font-size: 0.875rem;
-        animation: bounce 2s infinite;
-        opacity: 0.6;
-      }
-      @keyframes bounce {
-        0%, 20%, 50%, 80%, 100% { transform: translateX(-50%) translateY(0); }
-        40% { transform: translateX(-50%) translateY(-8px); }
-        60% { transform: translateX(-50%) translateY(-4px); }
+        padding: 2rem 1.2rem;
+        position: relative;
       }
 
-      /* Section spacing */
-      .content-section {
-        padding: 4rem 0;
-        border-top: 1px solid var(--border-color);
+      .hero-eyebrow {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.5rem;
+        padding: 0.35rem 0.85rem;
+        border-radius: 999px;
+        border: 1px solid var(--border-color);
+        background: color-mix(in srgb, var(--surface) 80%, transparent);
+        font-size: 0.8rem;
+        color: var(--text-secondary);
+        margin-bottom: 1.5rem;
+        backdrop-filter: blur(8px);
+        opacity: 0;
+        transform: translateY(16px);
+        animation: heroFadeUp 0.7s 0.3s ease forwards;
       }
-      .content-section:first-of-type {
-        border-top: none;
-        padding-top: 2rem;
+      .hero-eyebrow .dot {
+        width: 6px; height: 6px;
+        border-radius: 50%;
+        background: #22c55e;
+        animation: pulse 2s infinite;
+      }
+
+      .hero-name {
+        font-size: clamp(3rem, 10vw, 7rem);
+        font-weight: 800;
+        letter-spacing: -0.04em;
+        line-height: 1;
+        margin: 0 0 0.75rem;
+        opacity: 0;
+        transform: translateY(24px);
+        animation: heroFadeUp 0.8s 0.5s ease forwards;
+      }
+      .hero-name .gradient-text {
+        background: linear-gradient(135deg, var(--accent-color), #4ecdc4, #a78bfa);
+        background-size: 200% 200%;
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+        animation: gradientShift 6s ease infinite;
+      }
+
+      .hero-tagline {
+        font-size: clamp(1.1rem, 2.5vw, 1.5rem);
+        color: var(--text-secondary);
+        margin: 0 0 2.5rem;
+        font-weight: 400;
+        opacity: 0;
+        transform: translateY(20px);
+        animation: heroFadeUp 0.7s 0.7s ease forwards;
+      }
+      .hero-tagline .typewriter-cursor {
+        display: inline-block;
+        width: 2px;
+        height: 1.1em;
+        background: var(--accent-color);
+        margin-left: 2px;
+        vertical-align: text-bottom;
+        animation: blink 1s step-end infinite;
+      }
+
+      .hero-cta-row {
+        display: flex;
+        gap: 0.75rem;
+        flex-wrap: wrap;
+        justify-content: center;
+        opacity: 0;
+        transform: translateY(16px);
+        animation: heroFadeUp 0.7s 0.9s ease forwards;
+      }
+      .hero-cta {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.5rem;
+        padding: 0.7rem 1.5rem;
+        border-radius: 8px;
+        font-size: 0.95rem;
+        font-weight: 500;
+        text-decoration: none;
+        transition: all 0.25s ease;
+      }
+      .hero-cta-primary {
+        background: var(--accent-color);
+        color: var(--bg);
+      }
+      .hero-cta-primary:hover {
+        opacity: 0.9;
+        transform: translateY(-1px);
+        box-shadow: 0 8px 24px color-mix(in srgb, var(--accent-color) 35%, transparent);
+      }
+      .hero-cta-secondary {
+        border: 1px solid var(--border-color);
+        color: var(--text);
+        background: color-mix(in srgb, var(--surface) 60%, transparent);
+        backdrop-filter: blur(8px);
+      }
+      .hero-cta-secondary:hover {
+        border-color: var(--accent-color);
+        background: var(--surface);
+      }
+
+      .scroll-indicator {
+        position: absolute;
+        bottom: 2.5rem;
+        left: 50%;
+        transform: translateX(-50%);
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 0.5rem;
+        color: var(--text-secondary);
+        font-size: 0.75rem;
+        opacity: 0;
+        animation: heroFadeUp 0.6s 1.4s ease forwards;
+      }
+      .scroll-mouse {
+        width: 22px; height: 34px;
+        border: 2px solid var(--text-secondary);
+        border-radius: 11px;
+        position: relative;
+      }
+      .scroll-mouse::after {
+        content: '';
+        width: 3px; height: 8px;
+        background: var(--text-secondary);
+        border-radius: 2px;
+        position: absolute;
+        top: 5px; left: 50%;
+        transform: translateX(-50%);
+        animation: scrollDot 1.8s ease infinite;
+      }
+
+      /* ---- Sections ---- */
+      .content-section {
+        padding: 5rem 0;
+        border-top: 1px solid var(--border-color);
+        opacity: 0;
+        transform: translateY(40px);
+        transition: opacity 0.8s ease, transform 0.8s ease;
+      }
+      .content-section.visible {
+        opacity: 1;
+        transform: translateY(0);
+      }
+
+      /* ---- Project Cards ---- */
+      .project-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+        gap: 1rem;
+        margin-bottom: 1rem;
+      }
+      .project-card {
+        display: flex;
+        gap: 1rem;
+        padding: 1.25rem;
+        background: var(--surface);
+        border: 1px solid var(--border-color);
+        border-radius: 14px;
+        text-decoration: none;
+        color: inherit;
+        transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        position: relative;
+        overflow: hidden;
+        will-change: transform;
+      }
+      .project-card::before {
+        content: '';
+        position: absolute;
+        inset: 0;
+        border-radius: 14px;
+        opacity: 0;
+        transition: opacity 0.3s ease;
+        background: radial-gradient(
+          400px circle at var(--mouse-x, 50%) var(--mouse-y, 50%),
+          color-mix(in srgb, var(--accent-color) 8%, transparent),
+          transparent 60%
+        );
+      }
+      .project-card:hover::before { opacity: 1; }
+      .project-card:hover {
+        transform: translateY(-4px);
+        border-color: color-mix(in srgb, var(--accent-color) 40%, var(--border-color));
+        box-shadow: 0 12px 40px rgba(0, 0, 0, 0.12), 0 0 0 1px color-mix(in srgb, var(--accent-color) 15%, transparent);
+      }
+      .project-card > * { position: relative; z-index: 1; }
+      .card-icon {
+        font-size: 2rem;
+        flex-shrink: 0;
+        transition: transform 0.3s ease;
+      }
+      .project-card:hover .card-icon { transform: scale(1.1); }
+      .card-content h3 {
+        font-size: 1.1rem;
+        margin-bottom: 0.25rem;
+        transition: color 0.2s ease;
+      }
+      .project-card:hover .card-content h3 { color: var(--accent-color); }
+      .card-content p {
+        font-size: 0.9rem;
+        color: var(--text-secondary);
+        margin-bottom: 0.5rem;
+      }
+      .tag {
+        display: inline-block;
+        font-size: 0.72rem;
+        padding: 0.2rem 0.55rem;
+        background: color-mix(in srgb, var(--accent-color) 15%, transparent);
+        color: var(--accent-color);
+        border-radius: 6px;
+        font-weight: 600;
+        letter-spacing: 0.02em;
+      }
+
+      /* ---- Stack Grid ---- */
+      .stack-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+        gap: 1rem;
+      }
+      .stack-item {
+        padding: 1.5rem;
+        background: var(--surface);
+        border: 1px solid var(--border-color);
+        border-radius: 12px;
+        transition: all 0.3s ease;
+        position: relative;
+        overflow: hidden;
+      }
+      .stack-item::after {
+        content: '';
+        position: absolute;
+        top: 0; left: 0; right: 0;
+        height: 3px;
+        background: linear-gradient(90deg, var(--accent-color), #4ecdc4);
+        transform: scaleX(0);
+        transform-origin: left;
+        transition: transform 0.4s ease;
+      }
+      .stack-item:hover::after { transform: scaleX(1); }
+      .stack-item:hover {
+        border-color: color-mix(in srgb, var(--accent-color) 30%, var(--border-color));
+        transform: translateY(-2px);
+      }
+      .stack-item h3 {
+        font-size: 1rem;
+        margin-bottom: 0.4rem;
+        color: var(--accent-color);
+      }
+      .stack-item p {
+        font-size: 0.88rem;
+        color: var(--text-secondary);
+        line-height: 1.5;
+        margin: 0;
+      }
+
+      /* ---- Link Cards ---- */
+      .link-cards {
+        display: flex;
+        gap: 0.75rem;
+        flex-wrap: wrap;
+      }
+      .link-card {
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+        padding: 0.75rem 1.1rem;
+        background: var(--surface);
+        border: 1px solid var(--border-color);
+        border-radius: 10px;
+        text-decoration: none;
+        color: var(--text);
+        font-size: 0.9rem;
+        font-weight: 500;
+        transition: all 0.25s ease;
+        position: relative;
+        overflow: hidden;
+      }
+      .link-card::before {
+        content: '';
+        position: absolute;
+        inset: 0;
+        opacity: 0;
+        background: radial-gradient(
+          250px circle at var(--mouse-x, 50%) var(--mouse-y, 50%),
+          color-mix(in srgb, var(--accent-color) 10%, transparent),
+          transparent 60%
+        );
+        transition: opacity 0.3s ease;
+      }
+      .link-card:hover::before { opacity: 1; }
+      .link-card:hover {
+        border-color: var(--accent-color);
+        transform: translateY(-2px);
+        box-shadow: 0 6px 20px rgba(0, 0, 0, 0.08);
+      }
+      .link-card > * { position: relative; z-index: 1; }
+      .link-icon { font-size: 1.1rem; }
+      .view-all {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.3rem;
+        color: var(--accent-color);
+        text-decoration: none;
+        font-size: 0.9rem;
+        font-weight: 500;
+        transition: gap 0.2s ease;
+      }
+      .view-all:hover { gap: 0.6rem; text-decoration: none; }
+
+      /* ---- Keyframes ---- */
+      @keyframes heroFadeUp {
+        from { opacity: 0; transform: translateY(16px); }
+        to { opacity: 1; transform: translateY(0); }
+      }
+      @keyframes pulse {
+        0%, 100% { opacity: 1; }
+        50% { opacity: 0.4; }
+      }
+      @keyframes blink {
+        50% { opacity: 0; }
+      }
+      @keyframes scrollDot {
+        0% { opacity: 1; transform: translateX(-50%) translateY(0); }
+        100% { opacity: 0; transform: translateX(-50%) translateY(12px); }
+      }
+      @keyframes gradientShift {
+        0%, 100% { background-position: 0% 50%; }
+        50% { background-position: 100% 50%; }
+      }
+
+      /* ---- Mobile ---- */
+      @media (max-width: 768px) {
+        .hero { min-height: 85vh; min-height: 85dvh; }
+        .project-grid { grid-template-columns: 1fr; }
+        .link-cards { flex-direction: column; }
+        .link-card { justify-content: center; }
+      }
+      @media (prefers-reduced-motion: reduce) {
+        *, *::before, *::after {
+          animation-duration: 0.01ms !important;
+          transition-duration: 0.01ms !important;
+        }
       }
     </style>
   </head>
   <body>
-    <!-- Site header with dropdown navigation groups. -->
+    <!-- Animated gradient background -->
+    <div class="hero-bg">
+      <canvas id="gradient-canvas"></canvas>
+    </div>
+
+    <!-- Mouse-follow spotlight -->
+    <div class="hero-spotlight" id="hero-spotlight"></div>
+
     <header class="site-header">
       <div class="header-inner">
         <a class="brand" href="/" aria-label="Home">
@@ -95,7 +412,6 @@
 
         <div class="header-actions">
           <nav class="menu" aria-label="Main menu">
-            <!-- Projects dropdown with links to project pages. -->
             <details class="header-dropdown">
               <summary>Projects</summary>
               <div class="dropdown-panel">
@@ -105,7 +421,6 @@
               </div>
             </details>
 
-            <!-- Shop dropdown -->
             <details class="header-dropdown">
               <summary>Shop</summary>
               <div class="dropdown-panel">
@@ -114,7 +429,6 @@
               </div>
             </details>
 
-            <!-- Links dropdown with links to social profiles and contact. -->
             <details class="header-dropdown">
               <summary>Links</summary>
               <div class="dropdown-panel">
@@ -124,7 +438,6 @@
               </div>
             </details>
 
-            <!-- More dropdown for additional pages. -->
             <details class="header-dropdown">
               <summary>More</summary>
               <div class="dropdown-panel">
@@ -134,7 +447,6 @@
               </div>
             </details>
 
-            <!-- Single-click theme selector cycles: Auto -> Light -> Dark. -->
             <div class="theme-control">
               <button
                 id="theme-toggle"
@@ -150,45 +462,62 @@
       </div>
     </header>
 
-    <!-- Main page content. -->
     <main>
-      <!-- Minimal hero - just name and tagline -->
-      <section class="hero-minimal">
-        <h1 class="hero-name">pn2222a</h1>
-        <p class="hero-tagline">I build things.</p>
-        <div class="scroll-hint" aria-hidden="true">Scroll ↓</div>
+      <!-- Hero -->
+      <section class="hero">
+        <div class="hero-eyebrow">
+          <span class="dot"></span>
+          Available for projects
+        </div>
+        <h1 class="hero-name">
+          <span class="gradient-text">pn2222a</span>
+        </h1>
+        <p class="hero-tagline">
+          <span id="typewriter-target"></span><span class="typewriter-cursor"></span>
+        </p>
+        <div class="hero-cta-row">
+          <a href="pages/projects/featured.html" class="hero-cta hero-cta-primary">
+            View Projects
+            <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </a>
+          <a href="pages/more/about.html" class="hero-cta hero-cta-secondary">About Me</a>
+        </div>
+        <div class="scroll-indicator">
+          <div class="scroll-mouse"></div>
+          Scroll
+        </div>
       </section>
 
-      <!-- Projects section -->
-      <section class="content-section reveal" aria-labelledby="projects-title">
+      <!-- Projects -->
+      <section class="content-section" aria-labelledby="projects-title">
         <h2 id="projects-title">Projects</h2>
         <div class="project-grid">
-          <a href="pages/projects/featured.html" class="project-card reveal reveal-delay-1">
-            <div class="card-icon">⚡</div>
+          <a href="pages/projects/featured.html" class="project-card">
+            <div class="card-icon">&#9889;</div>
             <div class="card-content">
               <h3>Flight Controllers</h3>
-              <p>Dreamscape F722 — STM32-based FPV flight controller</p>
+              <p>Dreamscape F722 &mdash; STM32-based FPV flight controller</p>
               <span class="tag">In Progress</span>
             </div>
           </a>
-          <a href="pages/projects/featured.html" class="project-card reveal reveal-delay-2">
-            <div class="card-icon">🎧</div>
+          <a href="pages/projects/featured.html" class="project-card">
+            <div class="card-icon">&#127911;</div>
             <div class="card-content">
               <h3>Portable Audio</h3>
               <p>Production-quality MP3 player/radio</p>
               <span class="tag">Prototype</span>
             </div>
           </a>
-          <a href="pages/projects/featured.html" class="project-card reveal reveal-delay-3">
-            <div class="card-icon">📟</div>
+          <a href="pages/projects/featured.html" class="project-card">
+            <div class="card-icon">&#128223;</div>
             <div class="card-content">
               <h3>Power Modules</h3>
-              <p>PMM-1.0 — Compact STM32-based BMS</p>
+              <p>PMM-1.0 &mdash; Compact STM32-based BMS</p>
               <span class="tag">Complete</span>
             </div>
           </a>
-          <a href="pages/projects/in-progress.html" class="project-card reveal reveal-delay-4">
-            <div class="card-icon">📡</div>
+          <a href="pages/projects/in-progress.html" class="project-card">
+            <div class="card-icon">&#128225;</div>
             <div class="card-content">
               <h3>Meshtastic Nodes</h3>
               <p>Long-range LoRa mesh communication</p>
@@ -196,81 +525,55 @@
             </div>
           </a>
         </div>
-        <a href="pages/projects/featured.html" class="view-all reveal reveal-delay-5">View all projects →</a>
+        <a href="pages/projects/featured.html" class="view-all">View all projects &rarr;</a>
       </section>
 
-      <!-- Skills/Stack section -->
-      <section class="content-section reveal" aria-labelledby="skills-title">
+      <!-- Stack -->
+      <section class="content-section" aria-labelledby="skills-title">
         <h2 id="skills-title">Stack</h2>
         <div class="stack-grid">
-          <div class="stack-item reveal reveal-delay-1">
+          <div class="stack-item">
             <h3>Embedded</h3>
             <p>STM32, ESP32, PlatformIO, FreeRTOS, bare metal C++</p>
           </div>
-          <div class="stack-item reveal reveal-delay-2">
+          <div class="stack-item">
             <h3>PCB Design</h3>
             <p>KiCad, multi-layer, impedance control, DFM</p>
           </div>
-          <div class="stack-item reveal reveal-delay-3">
+          <div class="stack-item">
             <h3>Cybersecurity</h3>
             <p>TryHackMe, HTB, bug bounties, CTFs</p>
           </div>
-          <div class="stack-item reveal reveal-delay-4">
+          <div class="stack-item">
             <h3>Linux & Tools</h3>
             <p>Arch/EndeavourOS, Git, Bash, Docker, CI/CD</p>
           </div>
         </div>
       </section>
 
-      <!-- Quick links section -->
-      <section class="content-section reveal" aria-labelledby="links-title">
+      <!-- Connect -->
+      <section class="content-section" aria-labelledby="links-title">
         <h2 id="links-title">Connect</h2>
         <div class="link-cards">
-          <a href="https://github.com/sneakylizard123-4" class="link-card reveal reveal-delay-1" target="_blank" rel="noopener">
-            <span class="link-icon">⌘</span>
+          <a href="https://github.com/sneakylizard123-4" class="link-card" target="_blank" rel="noopener">
+            <span class="link-icon">&#8984;</span>
             <span>GitHub</span>
           </a>
-          <a href="pages/more/contact.html" class="link-card reveal reveal-delay-2">
-            <span class="link-icon">✉</span>
+          <a href="pages/more/contact.html" class="link-card">
+            <span class="link-icon">&#9993;</span>
             <span>Contact</span>
           </a>
-          <a href="pages/more/about.html" class="link-card reveal reveal-delay-3">
-            <span class="link-icon">ℹ</span>
+          <a href="pages/more/about.html" class="link-card">
+            <span class="link-icon">&#8505;</span>
             <span>About</span>
           </a>
         </div>
       </section>
     </main>
 
-    <!-- Modular behavior scripts. -->
     <script src="scripts/dropdowns.js" defer></script>
     <script src="scripts/theme-toggle.js" defer></script>
     <script src="scripts/hero-anim.js" defer></script>
-    <script>
-      // Scroll-triggered reveal animations
-      (function() {
-        'use strict';
-        const reveals = document.querySelectorAll('.reveal');
-
-        if ('IntersectionObserver' in window) {
-          const observer = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-              if (entry.isIntersecting) {
-                entry.target.classList.add('visible');
-                observer.unobserve(entry.target);
-              }
-            });
-          }, {
-            threshold: 0.1,
-            rootMargin: '0px 0px -50px 0px'
-          });
-
-          reveals.forEach(el => observer.observe(el));
-        } else {
-          // Fallback: show all
-          reveals.forEach(el => el.classList.add('visible'));
-        }
-      })();
-    </script>
+    <script src="scripts/effects.js" defer></script>
   </body>
 </html>

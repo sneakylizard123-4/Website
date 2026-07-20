@@ -43,7 +43,13 @@ function updateThemeToggle(mode) {
   };
 
   const iconMode = mode === "auto" ? resolvedMode : mode;
-  themeToggle.innerHTML = iconByMode[iconMode] || iconByMode.light;
+  // Smooth rotation on icon swap
+  themeToggle.style.transition = "transform 0.4s cubic-bezier(0.4,0,0.2,1)";
+  themeToggle.style.transform = "rotate(180deg) scale(0.6)";
+  setTimeout(() => {
+    themeToggle.innerHTML = iconByMode[iconMode] || iconByMode.light;
+    themeToggle.style.transform = "rotate(0deg) scale(1)";
+  }, 180);
   themeToggle.title = titleByMode[mode] || "Theme: Auto";
   themeToggle.setAttribute(
     "aria-label",

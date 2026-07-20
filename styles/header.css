@@ -183,6 +183,7 @@
   width: 1.05rem;
   height: 1.05rem;
   display: block;
+  transition: opacity 0.2s ease;
 }
 
 .theme-toggle:hover,
