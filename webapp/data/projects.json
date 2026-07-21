@@ -3,15 +3,15 @@
     {
       "id": "ds-f722-v1",
       "title": "Dreamscape F722 V1",
-      "description": "STM32F722 based flight controller",
+      "description": "STM32F722 based flight controller for FPV drones with ICM-42688-P IMU and barometer",
       "file": "/pages/projects/dreamscape-f722-v1/index.html",
       "status": "In Progress",
       "date": "2026-02",
-      "image": "/images/projects/test-placeholder.svg",
-      "hoverImage": "/images/projects/test-placeholder-hover.svg",
-      "imageAlt": "Black and purple placeholder square",
+      "image": "/images/projects/dreamscape-f722/PCB.jpg",
+      "hoverImage": "/images/projects/dreamscape-f722/render-purple.png",
+      "imageAlt": "Dreamscape F722 flight controller PCB and 3D render",
       "sections": ["featured", "in-progress"],
-      "tags": ["STM32", "Sensors"]
+      "tags": ["STM32", "Flight Controller", "Betaflight", "IMU"]
     },
     {
       "id": "mesh_hand-v1",
@@ -29,15 +29,15 @@
     {
       "id": "ok-nrf-v1",
       "title": "Overkill nRF V1",
-      "description": "nRF24 based security auditing device",
+      "description": "ESP32-S3 based modular RF board with 3x nRF24L01+ radios, microSD, and NeoPixel",
       "file": "/pages/projects/overkill-nrf-v1/index.html",
       "status": "In Progress",
       "date": "2026-04",
-      "image": "/images/projects/test-placeholder.svg",
-      "hoverImage": "/images/projects/test-placeholder-hover.svg",
-      "imageAlt": "Black and purple placeholder square",
+      "image": "/images/projects/overkill-nrf/pcb.png",
+      "hoverImage": "/images/projects/overkill-nrf/rend1.png",
+      "imageAlt": "Overkill nRF V1 PCB and 3D render",
       "sections": ["featured", "in-progress"],
-      "tags": ["ESP32", "Radio"]
+      "tags": ["ESP32", "nRF24", "Radio", "Security"]
     }
   ]
 }
