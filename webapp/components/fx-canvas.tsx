@@ -25,12 +25,15 @@ export function FxCanvas() {
   const canvasRef = useRef<HTMLCanvasElement>(null);
 
   useEffect(() => {
-    const canvas = canvasRef.current;
-    if (!canvas) return;
+    const el = canvasRef.current;
+    if (!el) return;
     if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
 
-    const ctx = canvas.getContext("2d");
+    const ctx = el.getContext("2d");
     if (!ctx) return;
+
+    const cvs: HTMLCanvasElement = el;
+    const c: CanvasRenderingContext2D = ctx;
 
     let w = 0;
     let h = 0;
@@ -42,7 +45,6 @@ export function FxCanvas() {
 
     const effect: "blackhole" | "matrix" = Math.random() < 0.5 ? "blackhole" : "matrix";
 
-    /* ─── resize ─── */
     let bh: {
       cx: number; cy: number; Rs: number; shadowR: number;
       diskInner: number; diskOuter: number; lensR: number;
@@ -99,9 +101,9 @@ export function FxCanvas() {
       dpr = Math.min(window.devicePixelRatio || 1, 2);
       w = window.innerWidth;
       h = window.innerHeight;
-      canvas.width = w * dpr;
-      canvas.height = h * dpr;
-      ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+      cvs.width = w * dpr;
+      cvs.height = h * dpr;
+      c.setTransform(dpr, 0, 0, dpr, 0, 0);
       if (effect === "blackhole") initBlackHole();
       else initMatrix();
     }
@@ -110,7 +112,7 @@ export function FxCanvas() {
        EFFECT 1 — Interstellar black hole
        ─────────────────────────────────────────── */
     function drawDiskGradient(opacityScale: number) {
-      const g = ctx.createRadialGradient(bh.cx, bh.cy, bh.diskInner, bh.cx, bh.cy, bh.diskOuter);
+      const g = c.createRadialGradient(bh.cx, bh.cy, bh.diskInner, bh.cx, bh.cy, bh.diskOuter);
       g.addColorStop(0.00, `rgba(255,252,245,${0.95 * opacityScale})`);
       g.addColorStop(0.03, `rgba(255,240,190,${0.88 * opacityScale})`);
       g.addColorStop(0.10, `rgba(255,210,110,${0.70 * opacityScale})`);
@@ -122,23 +124,23 @@ export function FxCanvas() {
     }
 
     function drawBlackHole() {
-      const { cx, cy, Rs, shadowR, diskInner, diskOuter, lensR, stars } = bh;
+      const { cx, cy, shadowR, diskOuter, lensR, stars } = bh;
 
       bh.rotAngle += 0.00003;
       const tilt = 0.35 + Math.sin(bh.rotAngle) * 0.02;
       const dopplerAngle = bh.rotAngle * 0.5;
 
-      ctx.clearRect(0, 0, w, h);
+      c.clearRect(0, 0, w, h);
 
       if (!isDark()) {
-        ctx.fillStyle = "#f8f9fa";
-        ctx.fillRect(0, 0, w, h);
+        c.fillStyle = "#f8f9fa";
+        c.fillRect(0, 0, w, h);
       }
 
       for (let i = 0; i < stars.length; i++) {
         const s = stars[i];
-        let dx = s.x - cx;
-        let dy = s.y - cy;
+        const dx = s.x - cx;
+        const dy = s.y - cy;
         const dist = Math.sqrt(dx * dx + dy * dy);
         let angle = Math.atan2(dy, dx);
 
@@ -163,53 +165,53 @@ export function FxCanvas() {
           alpha *= dimFactor;
         }
 
-        ctx.beginPath();
-        ctx.arc(s._drawX!, s._drawY!, s.r, 0, Math.PI * 2);
-        ctx.fillStyle = `rgba(${cr},${cg},${cb},${alpha})`;
-        ctx.fill();
+        c.beginPath();
+        c.arc(s._drawX!, s._drawY!, s.r, 0, Math.PI * 2);
+        c.fillStyle = `rgba(${cr},${cg},${cb},${alpha})`;
+        c.fill();
       }
 
-      const outerGlow = ctx.createRadialGradient(cx, cy, shadowR * 2, cx, cy, diskOuter * 1.1);
+      const outerGlow = c.createRadialGradient(cx, cy, shadowR * 2, cx, cy, diskOuter * 1.1);
       outerGlow.addColorStop(0, "rgba(255,160,40,0.10)");
       outerGlow.addColorStop(0.4, "rgba(255,100,20,0.04)");
       outerGlow.addColorStop(1, "rgba(200,60,10,0)");
-      ctx.beginPath();
-      ctx.arc(cx, cy, diskOuter * 1.1, 0, Math.PI * 2);
-      ctx.fillStyle = outerGlow;
-      ctx.fill();
+      c.beginPath();
+      c.arc(cx, cy, diskOuter * 1.1, 0, Math.PI * 2);
+      c.fillStyle = outerGlow;
+      c.fill();
 
-      ctx.save();
-      ctx.beginPath();
-      ctx.rect(0, 0, w, cy);
-      ctx.clip();
-      ctx.beginPath();
-      ctx.ellipse(cx, cy, diskOuter, diskOuter * tilt, 0, 0, Math.PI * 2);
-      ctx.fillStyle = drawDiskGradient(0.72);
-      ctx.fill();
-      ctx.restore();
+      c.save();
+      c.beginPath();
+      c.rect(0, 0, w, cy);
+      c.clip();
+      c.beginPath();
+      c.ellipse(cx, cy, diskOuter, diskOuter * tilt, 0, 0, Math.PI * 2);
+      c.fillStyle = drawDiskGradient(0.72);
+      c.fill();
+      c.restore();
 
-      ctx.beginPath();
-      ctx.arc(cx, cy, shadowR, 0, Math.PI * 2);
-      ctx.fillStyle = "#000";
-      ctx.fill();
+      c.beginPath();
+      c.arc(cx, cy, shadowR, 0, Math.PI * 2);
+      c.fillStyle = "#000";
+      c.fill();
 
-      ctx.save();
-      ctx.beginPath();
-      ctx.rect(0, cy, w, h);
-      ctx.clip();
-      ctx.beginPath();
-      ctx.ellipse(cx, cy, diskOuter, diskOuter * tilt, 0, 0, Math.PI * 2);
-      ctx.fillStyle = drawDiskGradient(1.0);
-      ctx.fill();
-      ctx.restore();
+      c.save();
+      c.beginPath();
+      c.rect(0, cy, w, h);
+      c.clip();
+      c.beginPath();
+      c.ellipse(cx, cy, diskOuter, diskOuter * tilt, 0, 0, Math.PI * 2);
+      c.fillStyle = drawDiskGradient(1.0);
+      c.fill();
+      c.restore();
 
-      ctx.save();
-      ctx.beginPath();
-      ctx.ellipse(cx, cy, diskOuter, diskOuter * tilt, 0, 0, Math.PI * 2);
-      ctx.clip();
+      c.save();
+      c.beginPath();
+      c.ellipse(cx, cy, diskOuter, diskOuter * tilt, 0, 0, Math.PI * 2);
+      c.clip();
       const dbx = Math.cos(dopplerAngle);
       const dby = Math.sin(dopplerAngle);
-      const dopplerGrad = ctx.createLinearGradient(
+      const dopplerGrad = c.createLinearGradient(
         cx - dbx * diskOuter, cy - dby * diskOuter * tilt,
         cx + dbx * diskOuter, cy + dby * diskOuter * tilt
       );
@@ -217,24 +219,24 @@ export function FxCanvas() {
       dopplerGrad.addColorStop(0.40, "rgba(255,200,100,0)");
       dopplerGrad.addColorStop(0.60, "rgba(255,200,100,0)");
       dopplerGrad.addColorStop(1, "rgba(255,120,40,0.12)");
-      ctx.fillStyle = dopplerGrad;
-      ctx.fillRect(cx - diskOuter, cy - diskOuter * tilt, diskOuter * 2, diskOuter * tilt * 2);
-      ctx.restore();
+      c.fillStyle = dopplerGrad;
+      c.fillRect(cx - diskOuter, cy - diskOuter * tilt, diskOuter * 2, diskOuter * tilt * 2);
+      c.restore();
 
-      ctx.beginPath();
-      ctx.arc(cx, cy, shadowR, 0, Math.PI * 2);
-      ctx.strokeStyle = "rgba(255,245,215,0.55)";
-      ctx.lineWidth = 1.8;
-      ctx.stroke();
+      c.beginPath();
+      c.arc(cx, cy, shadowR, 0, Math.PI * 2);
+      c.strokeStyle = "rgba(255,245,215,0.55)";
+      c.lineWidth = 1.8;
+      c.stroke();
 
-      const ringGlow = ctx.createRadialGradient(cx, cy, shadowR * 0.90, cx, cy, shadowR * 1.25);
+      const ringGlow = c.createRadialGradient(cx, cy, shadowR * 0.90, cx, cy, shadowR * 1.25);
       ringGlow.addColorStop(0, "rgba(255,245,215,0)");
       ringGlow.addColorStop(0.5, "rgba(255,245,215,0.20)");
       ringGlow.addColorStop(1, "rgba(255,210,120,0)");
-      ctx.beginPath();
-      ctx.arc(cx, cy, shadowR * 1.25, 0, Math.PI * 2);
-      ctx.fillStyle = ringGlow;
-      ctx.fill();
+      c.beginPath();
+      c.arc(cx, cy, shadowR * 1.25, 0, Math.PI * 2);
+      c.fillStyle = ringGlow;
+      c.fill();
 
       bh.t++;
     }
@@ -257,7 +259,7 @@ export function FxCanvas() {
         }
 
         for (let j = 0; j < col.len; j++) {
-          const charY = col.headY - j * 16;
+          let charY = col.headY - j * 16;
           if (charY < -30 || charY > h + 50) {
             col.chars[j] = null;
             continue;
@@ -271,7 +273,6 @@ export function FxCanvas() {
           if (dist2 < CR2 && dist2 > 1) {
             const dist = Math.sqrt(dist2);
             const nx = dx / dist;
-            const ny = dy / dist;
             const overlap = CR - dist;
             charX += nx * overlap * 0.5;
             charY -= overlap * 0.12 * (1 - dist / CR);
@@ -284,16 +285,16 @@ export function FxCanvas() {
     }
 
     function drawMatrix() {
-      ctx.clearRect(0, 0, w, h);
+      c.clearRect(0, 0, w, h);
 
       if (!isDark()) {
-        ctx.fillStyle = "#f8f9fa";
-        ctx.fillRect(0, 0, w, h);
+        c.fillStyle = "#f8f9fa";
+        c.fillRect(0, 0, w, h);
       }
 
       const isDk = isDark();
-      ctx.font = "15px monospace";
-      ctx.textAlign = "center";
+      c.font = "15px monospace";
+      c.textAlign = "center";
 
       for (let i = 0; i < mx.columns.length; i++) {
         const col = mx.columns[i];
@@ -307,19 +308,19 @@ export function FxCanvas() {
           let alpha = fadeIn * fadeTail;
 
           if (j === 0) {
-            ctx.shadowBlur = 12;
-            ctx.shadowColor = isDk ? "#0f0" : "#080";
+            c.shadowBlur = 12;
+            c.shadowColor = isDk ? "#0f0" : "#080";
             alpha = 1;
           }
 
           const glyph = mx.glyphs[(mx.t + i * 7 + j * 13) % mx.glyphs.length];
 
-          ctx.fillStyle = isDk
+          c.fillStyle = isDk
             ? `rgba(0,255,65,${alpha})`
             : `rgba(0,100,35,${alpha})`;
-          ctx.fillText(glyph, ch.x, ch.y);
+          c.fillText(glyph, ch.x, ch.y);
 
-          ctx.shadowBlur = 0;
+          c.shadowBlur = 0;
         }
       }
     }
