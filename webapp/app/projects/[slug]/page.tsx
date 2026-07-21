@@ -43,7 +43,7 @@ export default async function ProjectDetailPage({ params }: Props) {
 
   return (
     <div className="mx-auto w-full max-w-3xl px-4 py-12">
-      <Button render={<Link href="/projects/featured" />} variant="ghost" size="sm" className="mb-6">
+      <Button render={<Link href="/projects/featured" />} variant="ghost" size="sm" className="mb-6" nativeButton={false}>
         <ArrowLeft className="mr-1.5 h-4 w-4" />
         All Projects
       </Button>

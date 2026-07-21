@@ -13,6 +13,8 @@ const THEME_INIT_SCRIPT = `
 export function ThemeInitScript() {
   return (
     <script
+      type={typeof window === "undefined" ? "text/javascript" : "text/plain"}
+      suppressHydrationWarning
       dangerouslySetInnerHTML={{ __html: THEME_INIT_SCRIPT }}
     />
   );

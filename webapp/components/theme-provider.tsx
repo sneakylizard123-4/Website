@@ -22,9 +22,7 @@ export function useTheme() {
 
 function getSystemPreference(): "light" | "dark" {
   if (typeof window === "undefined") return "dark";
-  return window.matchMedia("(prefers-color-scheme: dark)").matches
-    ? "dark"
-    : "light";
+  return window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light";
 }
 
 function resolveTheme(mode: Theme): "light" | "dark" {
@@ -38,7 +36,7 @@ function applyResolved(resolved: "light" | "dark") {
   root.classList.add(resolved);
 }
 
-function getInitialTheme(): Theme {
+function getStoredTheme(): Theme {
   if (typeof window === "undefined") return "auto";
   try {
     return (localStorage.getItem("themePreference") as Theme) || "auto";
@@ -47,16 +45,19 @@ function getInitialTheme(): Theme {
   }
 }
 
-function getInitialResolved(mode: Theme): "light" | "dark" {
-  if (typeof window === "undefined") return "dark";
-  return resolveTheme(mode);
-}
-
 export function ThemeProvider({ children }: { children: React.ReactNode }) {
-  const [theme, setThemeState] = useState<Theme>(getInitialTheme);
-  const [resolved, setResolved] = useState<"light" | "dark">(() =>
-    getInitialResolved(theme)
-  );
+  const [theme, setThemeState] = useState<Theme>("auto");
+  const [resolved, setResolved] = useState<"light" | "dark">("dark");
+
+  useEffect(() => {
+    const stored = getStoredTheme();
+    const r = resolveTheme(stored);
+    // Sync React state with localStorage after hydration
+    // eslint-disable-next-line react-hooks/set-state-in-effect
+    setThemeState(stored);
+    setResolved(r);
+    applyResolved(r);
+  }, []);
 
   useEffect(() => {
     applyResolved(resolved);

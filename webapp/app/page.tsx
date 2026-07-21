@@ -63,11 +63,11 @@ export default function HomePage() {
         </p>
 
         <div className="mt-8 flex flex-wrap justify-center gap-3 animate-in fade-in slide-in-from-bottom-4 duration-700 delay-600">
-          <Button render={<Link href="/projects/featured" />}>
+          <Button render={<Link href="/projects/featured" />} nativeButton={false}>
             View Projects
             <ArrowRight className="ml-1.5 h-4 w-4" />
           </Button>
-          <Button render={<Link href="/about" />} variant="outline">
+          <Button render={<Link href="/about" />} variant="outline" nativeButton={false}>
             About Me
           </Button>
         </div>
