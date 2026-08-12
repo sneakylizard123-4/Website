@@ -1,0 +1,39 @@
+{
+  "tiers": [
+    {
+      "id": "patron",
+      "label": "Patron",
+      "blurb": "Core supporters keeping projects alive",
+      "sponsors": [
+        {
+          "name": "Hagow",
+          "link": "https://youtube.com/@udawg95"
+        }
+      ]
+    },
+    {
+      "id": "supporter",
+      "label": "Supporter",
+      "blurb": "Folks who chip in along the way",
+      "sponsors": []
+    },
+    {
+      "id": "backer",
+      "label": "Backer",
+      "blurb": "One-off and small contributions",
+      "sponsors": []
+    }
+  ],
+  "platforms": [
+    {
+      "label": "GitHub Sponsors",
+      "href": "https://github.com/sponsors/sneakylizard123-4",
+      "icon": "github"
+    },
+    {
+      "label": "Bitcoin",
+      "href": "bitcoin:add soon trust me",
+      "icon": "bitcoin"
+    }
+  ]
+}

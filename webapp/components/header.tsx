@@ -33,6 +33,7 @@ const NAV = [
     label: "More",
     items: [
       { label: "About", href: "/about" },
+      { label: "Sponsors", href: "/sponsors" },
       { label: "Blog", href: "/blog" },
       { label: "Now", href: "/now" },
     ],

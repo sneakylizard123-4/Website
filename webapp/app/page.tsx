@@ -6,6 +6,7 @@ import { GradientCanvas } from "@/components/gradient-canvas";
 import { Spotlight } from "@/components/spotlight";
 import { Typewriter } from "@/components/typewriter";
 import { ProjectCard } from "@/components/project-card";
+import { SponsorSection } from "@/components/sponsor-section";
 import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import projectsData from "@/data/projects.json";
@@ -127,6 +128,9 @@ export default function HomePage() {
           ))}
         </div>
       </section>
+
+      {/* Sponsors */}
+      <SponsorSection />
 
       {/* Connect */}
       <section className="mx-auto w-full max-w-3xl border-t border-border px-4 py-20">
