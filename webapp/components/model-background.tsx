@@ -130,7 +130,7 @@ export function ModelBackground({
   }, []);
 
   return (
-    <div ref={containerRef} className="pointer-events-none absolute inset-0 h-[500vh]">
+    <div aria-hidden="true" ref={containerRef} className="pointer-events-none absolute inset-0 h-[500vh]">
       <div className="sticky top-0 h-dvh w-full">
         <Canvas
           camera={{ position: [0, 1.5, 3.5], fov: 40 }}

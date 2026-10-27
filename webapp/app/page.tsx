@@ -12,8 +12,9 @@ import { Button } from "@/components/ui/button";
 import projectsData from "@/data/projects.json";
 
 const FEATURED = projectsData.projects
-  .filter((p) => p.status === "In Progress")
-  .slice(0, 3);
+  .filter((p) => p.sections.includes("featured"))
+  .sort((a, b) => b.date.localeCompare(a.date))
+  .slice(0, 5);
 
 const STACK = [
   {

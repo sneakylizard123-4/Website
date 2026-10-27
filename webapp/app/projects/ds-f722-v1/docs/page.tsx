@@ -41,8 +41,8 @@ const UART_MAP = [
 ];
 
 const SCHEMATIC_IMAGES = [
-  { src: "/images/projects/dreamscape-f722/Schematic.jpg", alt: "Main schematic", caption: "Main schematic — MCU, power, IMU, barometer, UART, SPI" },
-  { src: "/images/projects/dreamscape-f722/Schematic1.jpg", alt: "Schematic sheet 2", caption: "Sheet 2 — Connectors, PWM outputs, buzzer, LED strip" },
+  { src: "/images/projects/dreamscape-f722/schematic.webp", alt: "Main schematic", caption: "Main schematic — MCU, power, IMU, barometer, UART, SPI" },
+  { src: "/images/projects/dreamscape-f722/schematic1.webp", alt: "Schematic sheet 2", caption: "Sheet 2 — Connectors, PWM outputs, buzzer, LED strip" },
 ];
 
 export default function DreamscapeF722DocsPage() {
@@ -90,7 +90,7 @@ export default function DreamscapeF722DocsPage() {
         {/* ── 3-D Render ── */}
         <figure className="not-prose relative my-10 overflow-hidden rounded-2xl border border-border">
           <Image
-            src="/images/projects/dreamscape-f722/render-purple.png"
+            src="/images/projects/dreamscape-f722/render-purple.webp"
             alt="Dreamscape F722 V1 3D render"
             width={960}
             height={720}
@@ -117,7 +117,7 @@ export default function DreamscapeF722DocsPage() {
         {/* ── PCB ── */}
         <figure className="not-prose relative my-10 overflow-hidden rounded-2xl border border-border">
           <Image
-            src="/images/projects/dreamscape-f722/PCB.jpg"
+            src="/images/projects/dreamscape-f722/pcb.webp"
             alt="Dreamscape F722 V1 PCB layout"
             width={720}
             height={540}

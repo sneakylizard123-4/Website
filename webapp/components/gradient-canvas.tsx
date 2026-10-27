@@ -21,7 +21,7 @@ export function GradientCanvas() {
 
     let w = 0;
     let h = 0;
-    let animId: number;
+    let animId = 0;
 
     function resize() {
       const dpr = Math.min(window.devicePixelRatio || 1, 2);
@@ -54,7 +54,13 @@ export function GradientCanvas() {
 
     resize();
     window.addEventListener("resize", resize);
-    animId = requestAnimationFrame(draw);
+
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+      draw(0);
+      cancelAnimationFrame(animId);
+    } else {
+      animId = requestAnimationFrame(draw);
+    }
 
     return () => {
       window.removeEventListener("resize", resize);
@@ -63,7 +69,7 @@ export function GradientCanvas() {
   }, [resolved]);
 
   return (
-    <div className="fixed inset-0 -z-10 overflow-hidden bg-background">
+    <div aria-hidden="true" className="fixed inset-0 -z-10 overflow-hidden bg-background">
       <canvas ref={canvasRef} className="block size-full" />
       <div className="pointer-events-none fixed inset-0 -z-10 opacity-[0.04] [background-image:linear-gradient(var(--border)_1px,transparent_1px),linear-gradient(90deg,var(--border)_1px,transparent_1px)] [background-size:60px_60px]" />
     </div>

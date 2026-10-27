@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import Image from "next/image";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Menu, X } from "lucide-react";
 import { ThemeToggle } from "@/components/theme-toggle";
 import {
@@ -43,12 +43,21 @@ const NAV = [
 export function Header() {
   const [mobileOpen, setMobileOpen] = useState(false);
 
+  useEffect(() => {
+    if (!mobileOpen) return;
+    const onKeyDown = (event: KeyboardEvent) => {
+      if (event.key === "Escape") setMobileOpen(false);
+    };
+    window.addEventListener("keydown", onKeyDown);
+    return () => window.removeEventListener("keydown", onKeyDown);
+  }, [mobileOpen]);
+
   return (
     <header className="sticky top-0 z-50 border-b border-border bg-background/80 backdrop-blur-md">
       <div className="mx-auto flex h-14 max-w-3xl items-center justify-between px-4">
         <Link href="/" className="flex items-center gap-2 font-heading text-lg font-bold text-foreground">
           <Image
-            src="/images/logo.png"
+            src="/images/logo-64.webp"
             alt="pn2222a logo"
             width={24}
             height={24}
@@ -88,7 +97,9 @@ export function Header() {
           <ThemeToggle />
           <button
             type="button"
-            aria-label="Toggle menu"
+            aria-label={mobileOpen ? "Close menu" : "Open menu"}
+            aria-expanded={mobileOpen}
+            aria-controls="mobile-menu"
             onClick={() => setMobileOpen(!mobileOpen)}
             className="inline-flex h-8 w-8 items-center justify-center rounded-md text-foreground/70 transition-colors hover:bg-accent"
           >
@@ -99,7 +110,7 @@ export function Header() {
 
       {/* Mobile dropdown */}
       {mobileOpen && (
-        <nav className="border-t border-border bg-background px-4 pb-4 pt-2 md:hidden" aria-label="Mobile menu">
+        <nav id="mobile-menu" className="border-t border-border bg-background px-4 pb-4 pt-2 md:hidden" aria-label="Mobile menu">
           {NAV.map((group) => (
             <div key={group.label} className="mb-2">
               <p className="mb-1 text-xs font-semibold uppercase tracking-wider text-muted-foreground">

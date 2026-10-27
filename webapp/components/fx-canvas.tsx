@@ -361,7 +361,7 @@ export function FxCanvas() {
   }, []);
 
   return (
-    <div className="fixed inset-0 -z-10 overflow-hidden">
+    <div aria-hidden="true" className="fixed inset-0 -z-10 overflow-hidden">
       <canvas ref={canvasRef} className="block h-full w-full" />
     </div>
   );

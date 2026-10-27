@@ -22,6 +22,7 @@ export function Spotlight() {
   return (
     <div
       ref={elRef}
+      aria-hidden="true"
       className="pointer-events-none fixed inset-0 -z-10 opacity-0 transition-opacity duration-700"
       style={{
         background:

@@ -100,7 +100,7 @@ export function MeshHandAssembly() {
         >
           <div className="relative">
             <Image
-              src="/images/projects/mesh-hand/pcb.png"
+              src="/images/projects/mesh-hand/pcb.webp"
               alt="Mesh_Hand bare PCB"
               width={720}
               height={540}
@@ -115,7 +115,7 @@ export function MeshHandAssembly() {
           style={{ opacity: render, transform: `scale(${0.9 + 0.1 * render})` }}
         >
           <Image
-            src="/images/projects/mesh-hand/render-purple.png"
+            src="/images/projects/mesh-hand/render-purple.webp"
             alt="Mesh_Hand 3D render"
             width={960}
             height={720}

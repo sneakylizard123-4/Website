@@ -17,6 +17,11 @@ export function Typewriter() {
   const deletingRef = useRef(false);
 
   useEffect(() => {
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+      const id = setTimeout(() => setText(PHRASES[0]), 0);
+      return () => clearTimeout(id);
+    }
+
     let timeout: ReturnType<typeof setTimeout>;
 
     function type() {
@@ -50,9 +55,15 @@ export function Typewriter() {
 
   return (
     <span>
-      {text}
-      <span className="inline-block w-[2px] animate-blink align-text-bottom text-primary">
-        |
+      <span aria-hidden="true">
+        {text}
+        <span className="inline-block w-[2px] animate-blink align-text-bottom text-primary motion-reduce:animate-none">
+          |
+        </span>
+      </span>
+      <span className="sr-only">
+        Embedded systems engineer, PCB designer, firmware developer, and
+        cybersecurity enthusiast.
       </span>
     </span>
   );

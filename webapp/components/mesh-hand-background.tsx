@@ -114,7 +114,7 @@ export function MeshHandBackground() {
   }, []);
 
   return (
-    <div ref={containerRef} className="pointer-events-none absolute inset-0 h-[500vh]">
+    <div aria-hidden="true" ref={containerRef} className="pointer-events-none absolute inset-0 h-[500vh]">
       <div className="sticky top-0 h-dvh w-full">
         {/* 3D Canvas */}
         <Canvas

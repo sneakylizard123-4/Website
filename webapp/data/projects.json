@@ -7,8 +7,8 @@
       "file": "/pages/projects/dreamscape-f722-v1/index.html",
       "status": "In Progress",
       "date": "2026-02",
-      "image": "/images/projects/dreamscape-f722/PCB.jpg",
-      "hoverImage": "/images/projects/dreamscape-f722/render-purple.png",
+      "image": "/images/projects/dreamscape-f722/pcb.webp",
+      "hoverImage": "/images/projects/dreamscape-f722/render-purple.webp",
       "imageAlt": "Dreamscape F722 flight controller PCB and 3D render",
       "sections": ["featured", "in-progress"],
       "tags": ["STM32", "Flight Controller", "Betaflight", "IMU"]
@@ -20,8 +20,8 @@
       "file": "/pages/projects/mesh-hand-v1/index.html",
       "status": "In Progress",
       "date": "2026-03",
-      "image": "/images/projects/mesh-hand/pcb.png",
-      "hoverImage": "/images/projects/mesh-hand/render-purple.png",
+      "image": "/images/projects/mesh-hand/pcb.webp",
+      "hoverImage": "/images/projects/mesh-hand/render-purple.webp",
       "imageAlt": "Mesh_Hand V1 purple PCB and 3D render",
       "sections": ["featured", "in-progress"],
       "tags": ["ESP32", "Meshtastic", "LoRa", "GPS", "Sensors"]
@@ -33,11 +33,50 @@
       "file": "/pages/projects/overkill-nrf-v1/index.html",
       "status": "In Progress",
       "date": "2026-04",
-      "image": "/images/projects/overkill-nrf/pcb.png",
-      "hoverImage": "/images/projects/overkill-nrf/rend1.png",
+      "image": "/images/projects/overkill-nrf/pcb.webp",
+      "hoverImage": "/images/projects/overkill-nrf/rend1.webp",
       "imageAlt": "Overkill nRF V1 PCB and 3D render",
-      "sections": ["featured", "in-progress"],
+      "sections": ["in-progress"],
       "tags": ["ESP32", "nRF24", "Radio", "Security"]
+    },
+    {
+      "id": "dreamscape-f405-v1",
+      "title": "Dreamscape F405 V1",
+      "description": "20×20 mm STM32F405 flight controller for 3-inch FPV drones with ICM-42688-P, AT7456E OSD, and full-size microSD blackbox",
+      "file": "/pages/projects/dreamscape-f405-2020/index.html",
+      "status": "In Progress",
+      "date": "2026-01",
+      "image": "/images/projects/dreamscape-f405/render-top.webp",
+      "hoverImage": "/images/projects/dreamscape-f405/render-bottom.webp",
+      "imageAlt": "Dreamscape F405 20x20 flight controller 3D render",
+      "sections": ["featured", "in-progress"],
+      "tags": ["STM32", "Flight Controller", "Betaflight", "OSD", "20x20"]
+    },
+    {
+      "id": "bitcoinminer-v1",
+      "title": "BitcoinMiner V1",
+      "description": "Single BM1370 ASIC Bitcoin miner with ESP32-S3, 20 A core regulator, 9 addressable LEDs, and fan control",
+      "file": "/pages/projects/bitcoinminer/index.html",
+      "status": "In Progress",
+      "date": "2026-05",
+      "image": "/images/projects/bitcoinminer/pcb-top-angle.webp",
+      "hoverImage": "/images/projects/bitcoinminer/pcb-iso-left.webp",
+      "imageAlt": "BitcoinMiner BM1370 ASIC board 3D render",
+      "sections": ["featured", "in-progress"],
+      "tags": ["BM1370", "ESP32", "Bitcoin", "ASIC", "Power"]
+    },
+    {
+      "id": "stm32h743-v1",
+      "title": "STM32H743 FPGA Devboard V1",
+      "description": "STM32H743 and iCE40 UP5K devboard with USB High-Speed PHY, Ethernet, 4-bit microSD, and stereo audio I/O",
+      "file": "/pages/projects/stm32h743/index.html",
+      "status": "In Progress",
+      "date": "2026-10",
+      "image": "/images/projects/stm32h743/render-top.webp",
+      "hoverImage": "/images/projects/stm32h743/render-bottom.webp",
+      "imageAlt": "STM32H743 and iCE40 UP5K devboard 3D render",
+      "sections": ["featured", "in-progress"],
+      "tags": ["STM32H743", "FPGA", "USB", "Ethernet", "Audio"]
     }
   ]
 }

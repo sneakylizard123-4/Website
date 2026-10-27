@@ -110,7 +110,7 @@ export default function OverkillNrfDocsPage() {
         {/* ── 3-D Render ── */}
         <figure className="not-prose relative my-10 overflow-hidden rounded-2xl border border-border">
           <Image
-            src="/images/projects/overkill-nrf/rend1.png"
+            src="/images/projects/overkill-nrf/rend1.webp"
             alt="Overkill nRF V1 3D render — top side"
             width={960}
             height={720}
@@ -136,7 +136,7 @@ export default function OverkillNrfDocsPage() {
         {/* ── PCB ── */}
         <figure className="not-prose relative my-10 overflow-hidden rounded-2xl border border-border">
           <Image
-            src="/images/projects/overkill-nrf/pcb.png"
+            src="/images/projects/overkill-nrf/pcb.webp"
             alt="Overkill nRF V1 PCB layout"
             width={720}
             height={540}

@@ -185,7 +185,7 @@ export default function MeshHandDocsPage() {
         {/* ── 3-D Render ── */}
         <figure className="not-prose relative my-10 overflow-hidden rounded-2xl border border-border">
           <Image
-            src="/images/projects/mesh-hand/render-purple.png"
+            src="/images/projects/mesh-hand/render-purple.webp"
             alt="Mesh_Hand V1 3D render"
             width={960}
             height={720}
@@ -212,7 +212,7 @@ export default function MeshHandDocsPage() {
         {/* ── PCB ── */}
         <figure className="not-prose relative my-10 overflow-hidden rounded-2xl border border-border">
           <Image
-            src="/images/projects/mesh-hand/pcb.png"
+            src="/images/projects/mesh-hand/pcb.webp"
             alt="Mesh_Hand V1 PCB rendering"
             width={720}
             height={540}

@@ -32,7 +32,10 @@ export function ProjectToolbar({
   return (
     <div className="mb-6 flex flex-wrap items-center gap-2">
       <DropdownMenu>
-        <DropdownMenuTrigger render={<Button variant="outline" size="sm" className="gap-1" />}>
+        <DropdownMenuTrigger
+          aria-label={`Category: ${activeCategory}`}
+          render={<Button variant="outline" size="sm" className="gap-1" />}
+        >
           {activeCategory}
           <ChevronDown className="h-3 w-3" />
         </DropdownMenuTrigger>
@@ -47,13 +50,17 @@ export function ProjectToolbar({
 
       <Input
         placeholder="Filter by name..."
+        aria-label="Filter projects by name, description, or tag"
         value={filter}
         onChange={(e) => onFilterChange(e.target.value)}
         className="h-8 max-w-[200px] text-sm"
       />
 
       <DropdownMenu>
-        <DropdownMenuTrigger render={<Button variant="outline" size="sm" className="gap-1" />}>
+        <DropdownMenuTrigger
+          aria-label="Sort projects"
+          render={<Button variant="outline" size="sm" className="gap-1" />}
+        >
           {sortBy === "newest" ? "Newest" : sortBy === "oldest" ? "Oldest" : "A-Z"}
           <ChevronDown className="h-3 w-3" />
         </DropdownMenuTrigger>
