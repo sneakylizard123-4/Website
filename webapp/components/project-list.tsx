@@ -12,6 +12,7 @@ export interface Project {
   date: string;
   image: string;
   hoverImage?: string;
+  href?: string;
   imageAlt: string;
   tags: string[];
   sections: string[];
@@ -82,7 +83,7 @@ export function ProjectList({ projects, defaultCategory }: ProjectListProps) {
             hoverImage={p.hoverImage}
             imageAlt={p.imageAlt}
             tags={p.tags}
-            href={`/projects/${p.id}`}
+            href={p.href ?? `/projects/${p.id}`}
           />
         ))}
       </div>

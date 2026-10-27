@@ -3,6 +3,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
+import { VersionSwitch } from "@/components/version-switch";
 import { ArrowLeft, ExternalLink } from "lucide-react";
 
 export const metadata: Metadata = {
@@ -156,6 +157,13 @@ export default function MeshHandDocsPage() {
             <span className="inline-flex items-center rounded-md bg-primary/15 px-2.5 py-0.5 text-xs font-medium text-primary">
               In Progress
             </span>
+            <VersionSwitch
+              versions={[
+                { label: "V1", href: "/projects/mesh_hand-v1/docs/" },
+                { label: "V2", href: "/projects/mesh_hand-v2/docs/" },
+              ]}
+              current="V1"
+            />
           </div>
           <p className="text-muted-foreground">
             ESP32-S3 handheld Meshtastic node with GPS, LoRa radio, environmental sensors, OLED display, and rotary

@@ -5,6 +5,12 @@ import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { ArrowRight, ArrowLeft, Cpu, Radio, Satellite, Thermometer, Battery, Activity } from "lucide-react";
 import { MeshHandBackground } from "@/components/mesh-hand-background";
+import { VersionSwitch } from "@/components/version-switch";
+
+const VERSIONS = [
+  { label: "V1", href: "/projects/mesh_hand-v1/" },
+  { label: "V2", href: "/projects/mesh_hand-v2/" },
+];
 
 const SPECS = [
   { icon: Cpu, label: "MCU", value: "ESP32-S3", detail: "Dual-core 240 MHz, Wi-Fi + BLE" },
@@ -29,6 +35,12 @@ export default function MeshHandLandingPage() {
             <span className="h-1.5 w-1.5 rounded-full bg-primary animate-pulse" />
             In Progress
           </div>
+
+          <VersionSwitch
+            versions={VERSIONS}
+            current="V1"
+            className="mb-4 animate-in fade-in slide-in-from-bottom-4 duration-700"
+          />
 
           <h1 className="font-heading text-[clamp(2.5rem,8vw,5.5rem)] font-extrabold leading-none tracking-tight animate-in fade-in slide-in-from-bottom-6 duration-800 delay-200">
             <span className="bg-gradient-to-br from-primary via-purple-400 to-teal-400 bg-clip-text text-transparent">

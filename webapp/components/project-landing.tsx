@@ -5,6 +5,7 @@ import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
+import { VersionSwitch, type ProjectVersion } from "@/components/version-switch";
 import {
   ArrowRight,
   ArrowLeft,
@@ -62,6 +63,8 @@ export type ProjectLandingProps = {
   specs: LandingSpec[];
   overview: string[];
   docsHref: string;
+  versions?: ProjectVersion[];
+  currentVersion?: string;
 };
 
 export function ProjectLanding({
@@ -75,6 +78,8 @@ export function ProjectLanding({
   specs,
   overview,
   docsHref,
+  versions,
+  currentVersion,
 }: ProjectLandingProps) {
   return (
     <div className="relative">
@@ -95,6 +100,14 @@ export function ProjectLanding({
           <span className="h-1.5 w-1.5 rounded-full bg-primary animate-pulse" />
           {status}
         </div>
+
+        {versions && currentVersion ? (
+          <VersionSwitch
+            versions={versions}
+            current={currentVersion}
+            className="mb-4 animate-in fade-in slide-in-from-bottom-4 duration-700"
+          />
+        ) : null}
 
         <h1 className="font-heading text-[clamp(2.25rem,8vw,5.5rem)] font-extrabold leading-none tracking-tight animate-in fade-in slide-in-from-bottom-6 duration-800 delay-200">
           <span className="bg-gradient-to-br from-primary via-purple-400 to-teal-400 bg-clip-text text-transparent">

@@ -22,6 +22,8 @@ export default function sitemap(): MetadataRoute.Sitemap {
     "/projects/ds-f722-v1/docs",
     "/projects/mesh_hand-v1",
     "/projects/mesh_hand-v1/docs",
+    "/projects/mesh_hand-v2",
+    "/projects/mesh_hand-v2/docs",
     "/projects/ok-nrf-v1",
     "/projects/ok-nrf-v1/docs",
     "/projects/dreamscape-f405-v1",

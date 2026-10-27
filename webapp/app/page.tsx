@@ -99,7 +99,7 @@ export default function HomePage() {
               hoverImage={p.hoverImage}
               imageAlt={p.imageAlt}
               tags={p.tags}
-              href={`/projects/${p.id}`}
+              href={p.href ?? `/projects/${p.id}`}
             />
           ))}
         </div>
